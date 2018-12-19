@@ -7,28 +7,50 @@
         {
           "indexed": false,
           "name": "resumeID",
-          "type": "uint256"
+          "type": "uint128"
         },
         {
           "indexed": false,
           "name": "score",
-          "type": "ufixed128x18"
+          "type": "uint128"
         },
         {
           "indexed": false,
           "name": "timestamp",
-          "type": "uint16"
+          "type": "uint128"
         }
       ],
       "name": "resumesProcessed",
       "type": "event"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "resumeID",
+          "type": "uint128"
+        },
+        {
+          "name": "score",
+          "type": "uint128"
+        },
+        {
+          "name": "timestamp",
+          "type": "uint128"
+        }
+      ],
+      "name": "processResumes",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
     }
   ],
-  "bytecode": "0x6080604052348015600f57600080fd5b50603580601d6000396000f3006080604052600080fd00a165627a7a72305820fb4750c1ba4d9f1dc7c97b17ee2286ab6d61e13d3624dcf92fd9462cf0bd57a00029",
-  "deployedBytecode": "0x6080604052600080fd00a165627a7a72305820fb4750c1ba4d9f1dc7c97b17ee2286ab6d61e13d3624dcf92fd9462cf0bd57a00029",
-  "sourceMap": "25:238:1:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;25:238:1;;;;;;;",
-  "deployedSourceMap": "25:238:1:-;;;;;",
-  "source": "pragma solidity ^0.4.0;\n\ncontract Resume {\n  event resumesProcessed(uint resumeID, ufixed score, uint16 timestamp); \n\n  function _processResumes(uint resumeID, ufixed score, uint16 timestamp) private  {\n    emit resumesProcessed(resumeID, score, timestamp);\n  }\n}\n",
+  "bytecode": "0x608060405234801561001057600080fd5b506101a1806100206000396000f300608060405260043610610041576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806369de7aba14610046575b600080fd5b34801561005257600080fd5b506100bb60048036038101908080356fffffffffffffffffffffffffffffffff16906020019092919080356fffffffffffffffffffffffffffffffff16906020019092919080356fffffffffffffffffffffffffffffffff1690602001909291905050506100bd565b005b7fb8fde36dd63c8ce1eb6a7f899235c019f07c79ff24c2397a7d5f2321870dceeb83838360405180846fffffffffffffffffffffffffffffffff166fffffffffffffffffffffffffffffffff168152602001836fffffffffffffffffffffffffffffffff166fffffffffffffffffffffffffffffffff168152602001826fffffffffffffffffffffffffffffffff166fffffffffffffffffffffffffffffffff168152602001935050505060405180910390a15050505600a165627a7a723058201ef393e2826481c1e45d22d359af277937704e0742a6103f963c1cce04c672c10029",
+  "deployedBytecode": "0x608060405260043610610041576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806369de7aba14610046575b600080fd5b34801561005257600080fd5b506100bb60048036038101908080356fffffffffffffffffffffffffffffffff16906020019092919080356fffffffffffffffffffffffffffffffff16906020019092919080356fffffffffffffffffffffffffffffffff1690602001909291905050506100bd565b005b7fb8fde36dd63c8ce1eb6a7f899235c019f07c79ff24c2397a7d5f2321870dceeb83838360405180846fffffffffffffffffffffffffffffffff166fffffffffffffffffffffffffffffffff168152602001836fffffffffffffffffffffffffffffffff166fffffffffffffffffffffffffffffffff168152602001826fffffffffffffffffffffffffffffffff166fffffffffffffffffffffffffffffffff168152602001935050505060405180910390a15050505600a165627a7a723058201ef393e2826481c1e45d22d359af277937704e0742a6103f963c1cce04c672c10029",
+  "sourceMap": "26:246:1:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;26:246:1;;;;;;;",
+  "deployedSourceMap": "26:246:1:-;;;;;;;;;;;;;;;;;;;;;;;;126:144;;8:9:-1;5:2;;;30:1;27;20:12;5:2;126:144:1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;221:44;238:8;248:5;255:9;221:44;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;126:144;;;:::o",
+  "source": "pragma solidity ^0.4.23;\n\ncontract Resume {\n  event resumesProcessed(uint128 resumeID, uint128 score, uint128 timestamp); \n\n  function processResumes(uint128 resumeID, uint128 score, uint128 timestamp) public  {\n    emit resumesProcessed(resumeID, score, timestamp);\n  }\n}\n",
   "sourcePath": "/Users/jeremyrosenfeld/tronDapppCompetition/contracts/Resume.sol",
   "ast": {
     "absolutePath": "/Users/jeremyrosenfeld/tronDapppCompetition/contracts/Resume.sol",
@@ -46,10 +68,10 @@
           "solidity",
           "^",
           "0.4",
-          ".0"
+          ".23"
         ],
         "nodeType": "PragmaDirective",
-        "src": "0:23:1"
+        "src": "0:24:1"
       },
       {
         "baseContracts": [],
@@ -81,21 +103,21 @@
                   "name": "resumeID",
                   "nodeType": "VariableDeclaration",
                   "scope": 66,
-                  "src": "68:13:1",
+                  "src": "69:16:1",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_uint256",
-                    "typeString": "uint256"
+                    "typeIdentifier": "t_uint128",
+                    "typeString": "uint128"
                   },
                   "typeName": {
                     "id": 59,
-                    "name": "uint",
+                    "name": "uint128",
                     "nodeType": "ElementaryTypeName",
-                    "src": "68:4:1",
+                    "src": "69:7:1",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
+                      "typeIdentifier": "t_uint128",
+                      "typeString": "uint128"
                     }
                   },
                   "value": null,
@@ -108,21 +130,21 @@
                   "name": "score",
                   "nodeType": "VariableDeclaration",
                   "scope": 66,
-                  "src": "83:12:1",
+                  "src": "87:13:1",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_ufixed128x18",
-                    "typeString": "ufixed128x18"
+                    "typeIdentifier": "t_uint128",
+                    "typeString": "uint128"
                   },
                   "typeName": {
                     "id": 61,
-                    "name": "ufixed",
+                    "name": "uint128",
                     "nodeType": "ElementaryTypeName",
-                    "src": "83:6:1",
+                    "src": "87:7:1",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_ufixed128x18",
-                      "typeString": "ufixed128x18"
+                      "typeIdentifier": "t_uint128",
+                      "typeString": "uint128"
                     }
                   },
                   "value": null,
@@ -135,36 +157,36 @@
                   "name": "timestamp",
                   "nodeType": "VariableDeclaration",
                   "scope": 66,
-                  "src": "97:16:1",
+                  "src": "102:17:1",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_uint16",
-                    "typeString": "uint16"
+                    "typeIdentifier": "t_uint128",
+                    "typeString": "uint128"
                   },
                   "typeName": {
                     "id": 63,
-                    "name": "uint16",
+                    "name": "uint128",
                     "nodeType": "ElementaryTypeName",
-                    "src": "97:6:1",
+                    "src": "102:7:1",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_uint16",
-                      "typeString": "uint16"
+                      "typeIdentifier": "t_uint128",
+                      "typeString": "uint128"
                     }
                   },
                   "value": null,
                   "visibility": "internal"
                 }
               ],
-              "src": "67:47:1"
+              "src": "68:52:1"
             },
-            "src": "45:70:1"
+            "src": "46:75:1"
           },
           {
             "body": {
               "id": 81,
               "nodeType": "Block",
-              "src": "201:60:1",
+              "src": "210:60:1",
               "statements": [
                 {
                   "eventCall": {
@@ -177,10 +199,10 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 68,
-                        "src": "229:8:1",
+                        "src": "238:8:1",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_uint256",
-                          "typeString": "uint256"
+                          "typeIdentifier": "t_uint128",
+                          "typeString": "uint128"
                         }
                       },
                       {
@@ -190,10 +212,10 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 70,
-                        "src": "239:5:1",
+                        "src": "248:5:1",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_ufixed128x18",
-                          "typeString": "ufixed128x18"
+                          "typeIdentifier": "t_uint128",
+                          "typeString": "uint128"
                         }
                       },
                       {
@@ -203,26 +225,26 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 72,
-                        "src": "246:9:1",
+                        "src": "255:9:1",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_uint16",
-                          "typeString": "uint16"
+                          "typeIdentifier": "t_uint128",
+                          "typeString": "uint128"
                         }
                       }
                     ],
                     "expression": {
                       "argumentTypes": [
                         {
-                          "typeIdentifier": "t_uint256",
-                          "typeString": "uint256"
+                          "typeIdentifier": "t_uint128",
+                          "typeString": "uint128"
                         },
                         {
-                          "typeIdentifier": "t_ufixed128x18",
-                          "typeString": "ufixed128x18"
+                          "typeIdentifier": "t_uint128",
+                          "typeString": "uint128"
                         },
                         {
-                          "typeIdentifier": "t_uint16",
-                          "typeString": "uint16"
+                          "typeIdentifier": "t_uint128",
+                          "typeString": "uint128"
                         }
                       ],
                       "id": 75,
@@ -230,10 +252,10 @@
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 66,
-                      "src": "212:16:1",
+                      "src": "221:16:1",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_event_nonpayable$_t_uint256_$_t_ufixed128x18_$_t_uint16_$returns$__$",
-                        "typeString": "function (uint256,ufixed128x18,uint16)"
+                        "typeIdentifier": "t_function_event_nonpayable$_t_uint128_$_t_uint128_$_t_uint128_$returns$__$",
+                        "typeString": "function (uint128,uint128,uint128)"
                       }
                     },
                     "id": 79,
@@ -244,7 +266,7 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "212:44:1",
+                    "src": "221:44:1",
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
@@ -252,7 +274,7 @@
                   },
                   "id": 80,
                   "nodeType": "EmitStatement",
-                  "src": "207:49:1"
+                  "src": "216:49:1"
                 }
               ]
             },
@@ -262,7 +284,7 @@
             "isConstructor": false,
             "isDeclaredConst": false,
             "modifiers": [],
-            "name": "_processResumes",
+            "name": "processResumes",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 73,
@@ -274,21 +296,21 @@
                   "name": "resumeID",
                   "nodeType": "VariableDeclaration",
                   "scope": 82,
-                  "src": "145:13:1",
+                  "src": "150:16:1",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_uint256",
-                    "typeString": "uint256"
+                    "typeIdentifier": "t_uint128",
+                    "typeString": "uint128"
                   },
                   "typeName": {
                     "id": 67,
-                    "name": "uint",
+                    "name": "uint128",
                     "nodeType": "ElementaryTypeName",
-                    "src": "145:4:1",
+                    "src": "150:7:1",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
+                      "typeIdentifier": "t_uint128",
+                      "typeString": "uint128"
                     }
                   },
                   "value": null,
@@ -300,21 +322,21 @@
                   "name": "score",
                   "nodeType": "VariableDeclaration",
                   "scope": 82,
-                  "src": "160:12:1",
+                  "src": "168:13:1",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_ufixed128x18",
-                    "typeString": "ufixed128x18"
+                    "typeIdentifier": "t_uint128",
+                    "typeString": "uint128"
                   },
                   "typeName": {
                     "id": 69,
-                    "name": "ufixed",
+                    "name": "uint128",
                     "nodeType": "ElementaryTypeName",
-                    "src": "160:6:1",
+                    "src": "168:7:1",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_ufixed128x18",
-                      "typeString": "ufixed128x18"
+                      "typeIdentifier": "t_uint128",
+                      "typeString": "uint128"
                     }
                   },
                   "value": null,
@@ -326,48 +348,48 @@
                   "name": "timestamp",
                   "nodeType": "VariableDeclaration",
                   "scope": 82,
-                  "src": "174:16:1",
+                  "src": "183:17:1",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_uint16",
-                    "typeString": "uint16"
+                    "typeIdentifier": "t_uint128",
+                    "typeString": "uint128"
                   },
                   "typeName": {
                     "id": 71,
-                    "name": "uint16",
+                    "name": "uint128",
                     "nodeType": "ElementaryTypeName",
-                    "src": "174:6:1",
+                    "src": "183:7:1",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_uint16",
-                      "typeString": "uint16"
+                      "typeIdentifier": "t_uint128",
+                      "typeString": "uint128"
                     }
                   },
                   "value": null,
                   "visibility": "internal"
                 }
               ],
-              "src": "144:47:1"
+              "src": "149:52:1"
             },
             "payable": false,
             "returnParameters": {
               "id": 74,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "201:0:1"
+              "src": "210:0:1"
             },
             "scope": 83,
-            "src": "120:141:1",
+            "src": "126:144:1",
             "stateMutability": "nonpayable",
             "superFunction": null,
-            "visibility": "private"
+            "visibility": "public"
           }
         ],
         "scope": 84,
-        "src": "25:238:1"
+        "src": "26:246:1"
       }
     ],
-    "src": "0:264:1"
+    "src": "0:273:1"
   },
   "legacyAST": {
     "absolutePath": "/Users/jeremyrosenfeld/tronDapppCompetition/contracts/Resume.sol",
@@ -385,10 +407,10 @@
           "solidity",
           "^",
           "0.4",
-          ".0"
+          ".23"
         ],
         "nodeType": "PragmaDirective",
-        "src": "0:23:1"
+        "src": "0:24:1"
       },
       {
         "baseContracts": [],
@@ -420,21 +442,21 @@
                   "name": "resumeID",
                   "nodeType": "VariableDeclaration",
                   "scope": 66,
-                  "src": "68:13:1",
+                  "src": "69:16:1",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_uint256",
-                    "typeString": "uint256"
+                    "typeIdentifier": "t_uint128",
+                    "typeString": "uint128"
                   },
                   "typeName": {
                     "id": 59,
-                    "name": "uint",
+                    "name": "uint128",
                     "nodeType": "ElementaryTypeName",
-                    "src": "68:4:1",
+                    "src": "69:7:1",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
+                      "typeIdentifier": "t_uint128",
+                      "typeString": "uint128"
                     }
                   },
                   "value": null,
@@ -447,21 +469,21 @@
                   "name": "score",
                   "nodeType": "VariableDeclaration",
                   "scope": 66,
-                  "src": "83:12:1",
+                  "src": "87:13:1",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_ufixed128x18",
-                    "typeString": "ufixed128x18"
+                    "typeIdentifier": "t_uint128",
+                    "typeString": "uint128"
                   },
                   "typeName": {
                     "id": 61,
-                    "name": "ufixed",
+                    "name": "uint128",
                     "nodeType": "ElementaryTypeName",
-                    "src": "83:6:1",
+                    "src": "87:7:1",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_ufixed128x18",
-                      "typeString": "ufixed128x18"
+                      "typeIdentifier": "t_uint128",
+                      "typeString": "uint128"
                     }
                   },
                   "value": null,
@@ -474,36 +496,36 @@
                   "name": "timestamp",
                   "nodeType": "VariableDeclaration",
                   "scope": 66,
-                  "src": "97:16:1",
+                  "src": "102:17:1",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_uint16",
-                    "typeString": "uint16"
+                    "typeIdentifier": "t_uint128",
+                    "typeString": "uint128"
                   },
                   "typeName": {
                     "id": 63,
-                    "name": "uint16",
+                    "name": "uint128",
                     "nodeType": "ElementaryTypeName",
-                    "src": "97:6:1",
+                    "src": "102:7:1",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_uint16",
-                      "typeString": "uint16"
+                      "typeIdentifier": "t_uint128",
+                      "typeString": "uint128"
                     }
                   },
                   "value": null,
                   "visibility": "internal"
                 }
               ],
-              "src": "67:47:1"
+              "src": "68:52:1"
             },
-            "src": "45:70:1"
+            "src": "46:75:1"
           },
           {
             "body": {
               "id": 81,
               "nodeType": "Block",
-              "src": "201:60:1",
+              "src": "210:60:1",
               "statements": [
                 {
                   "eventCall": {
@@ -516,10 +538,10 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 68,
-                        "src": "229:8:1",
+                        "src": "238:8:1",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_uint256",
-                          "typeString": "uint256"
+                          "typeIdentifier": "t_uint128",
+                          "typeString": "uint128"
                         }
                       },
                       {
@@ -529,10 +551,10 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 70,
-                        "src": "239:5:1",
+                        "src": "248:5:1",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_ufixed128x18",
-                          "typeString": "ufixed128x18"
+                          "typeIdentifier": "t_uint128",
+                          "typeString": "uint128"
                         }
                       },
                       {
@@ -542,26 +564,26 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 72,
-                        "src": "246:9:1",
+                        "src": "255:9:1",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_uint16",
-                          "typeString": "uint16"
+                          "typeIdentifier": "t_uint128",
+                          "typeString": "uint128"
                         }
                       }
                     ],
                     "expression": {
                       "argumentTypes": [
                         {
-                          "typeIdentifier": "t_uint256",
-                          "typeString": "uint256"
+                          "typeIdentifier": "t_uint128",
+                          "typeString": "uint128"
                         },
                         {
-                          "typeIdentifier": "t_ufixed128x18",
-                          "typeString": "ufixed128x18"
+                          "typeIdentifier": "t_uint128",
+                          "typeString": "uint128"
                         },
                         {
-                          "typeIdentifier": "t_uint16",
-                          "typeString": "uint16"
+                          "typeIdentifier": "t_uint128",
+                          "typeString": "uint128"
                         }
                       ],
                       "id": 75,
@@ -569,10 +591,10 @@
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 66,
-                      "src": "212:16:1",
+                      "src": "221:16:1",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_event_nonpayable$_t_uint256_$_t_ufixed128x18_$_t_uint16_$returns$__$",
-                        "typeString": "function (uint256,ufixed128x18,uint16)"
+                        "typeIdentifier": "t_function_event_nonpayable$_t_uint128_$_t_uint128_$_t_uint128_$returns$__$",
+                        "typeString": "function (uint128,uint128,uint128)"
                       }
                     },
                     "id": 79,
@@ -583,7 +605,7 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "212:44:1",
+                    "src": "221:44:1",
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
@@ -591,7 +613,7 @@
                   },
                   "id": 80,
                   "nodeType": "EmitStatement",
-                  "src": "207:49:1"
+                  "src": "216:49:1"
                 }
               ]
             },
@@ -601,7 +623,7 @@
             "isConstructor": false,
             "isDeclaredConst": false,
             "modifiers": [],
-            "name": "_processResumes",
+            "name": "processResumes",
             "nodeType": "FunctionDefinition",
             "parameters": {
               "id": 73,
@@ -613,21 +635,21 @@
                   "name": "resumeID",
                   "nodeType": "VariableDeclaration",
                   "scope": 82,
-                  "src": "145:13:1",
+                  "src": "150:16:1",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_uint256",
-                    "typeString": "uint256"
+                    "typeIdentifier": "t_uint128",
+                    "typeString": "uint128"
                   },
                   "typeName": {
                     "id": 67,
-                    "name": "uint",
+                    "name": "uint128",
                     "nodeType": "ElementaryTypeName",
-                    "src": "145:4:1",
+                    "src": "150:7:1",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
+                      "typeIdentifier": "t_uint128",
+                      "typeString": "uint128"
                     }
                   },
                   "value": null,
@@ -639,21 +661,21 @@
                   "name": "score",
                   "nodeType": "VariableDeclaration",
                   "scope": 82,
-                  "src": "160:12:1",
+                  "src": "168:13:1",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_ufixed128x18",
-                    "typeString": "ufixed128x18"
+                    "typeIdentifier": "t_uint128",
+                    "typeString": "uint128"
                   },
                   "typeName": {
                     "id": 69,
-                    "name": "ufixed",
+                    "name": "uint128",
                     "nodeType": "ElementaryTypeName",
-                    "src": "160:6:1",
+                    "src": "168:7:1",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_ufixed128x18",
-                      "typeString": "ufixed128x18"
+                      "typeIdentifier": "t_uint128",
+                      "typeString": "uint128"
                     }
                   },
                   "value": null,
@@ -665,48 +687,48 @@
                   "name": "timestamp",
                   "nodeType": "VariableDeclaration",
                   "scope": 82,
-                  "src": "174:16:1",
+                  "src": "183:17:1",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_uint16",
-                    "typeString": "uint16"
+                    "typeIdentifier": "t_uint128",
+                    "typeString": "uint128"
                   },
                   "typeName": {
                     "id": 71,
-                    "name": "uint16",
+                    "name": "uint128",
                     "nodeType": "ElementaryTypeName",
-                    "src": "174:6:1",
+                    "src": "183:7:1",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_uint16",
-                      "typeString": "uint16"
+                      "typeIdentifier": "t_uint128",
+                      "typeString": "uint128"
                     }
                   },
                   "value": null,
                   "visibility": "internal"
                 }
               ],
-              "src": "144:47:1"
+              "src": "149:52:1"
             },
             "payable": false,
             "returnParameters": {
               "id": 74,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "201:0:1"
+              "src": "210:0:1"
             },
             "scope": 83,
-            "src": "120:141:1",
+            "src": "126:144:1",
             "stateMutability": "nonpayable",
             "superFunction": null,
-            "visibility": "private"
+            "visibility": "public"
           }
         ],
         "scope": 84,
-        "src": "25:238:1"
+        "src": "26:246:1"
       }
     ],
-    "src": "0:264:1"
+    "src": "0:273:1"
   },
   "compiler": {
     "name": "solc",
@@ -716,9 +738,9 @@
     "*": {
       "events": {},
       "links": {},
-      "address": "41231431a23f506cf9d4d67faf4c3a45a89fd92bb6"
+      "address": "414fd64a19264c8f9e213f7a68a9b5d3d786a99dde"
     }
   },
   "schemaVersion": "2.0.1",
-  "updatedAt": "2018-12-18T20:33:14.738Z"
+  "updatedAt": "2018-12-19T00:27:04.519Z"
 }

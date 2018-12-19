@@ -1,9 +1,9 @@
-pragma solidity ^0.5.1;
+pragma solidity ^0.4.23;
 
 contract Resume {
-  event resumesProcessed(uint resumeID, uint score, uint16 timestamp); 
+  event resumesProcessed(uint128 resumeID, uint128 score, uint128 timestamp); 
 
-  function _processResumes(uint resumeID, uint score, uint16 timestamp) public  {
+  function processResumes(uint128 resumeID, uint128 score, uint128 timestamp) public  {
     emit resumesProcessed(resumeID, score, timestamp);
   }
 }
