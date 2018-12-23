@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 
 const FOUNDATION_ADDRESS = 'TWiWt5SEDzaEqS6kE5gandWMNfxR2B5xzg';
 ////////////////////////////////////////////////////////////////////////////////////
-const contractAddress = 'TCDMKQkkqqrSCur25N3puWRD837xi2dSnq';   /// Add your contract address here
+const contractAddress = 'TKD928iuZbHS85D8KG9t8CRpjP7QsZDcuZ';   /// Add your contract address here
 ////////////////////////////////////////////////////////////////////////////////////
 
 class App extends React.Component {
@@ -14,8 +14,10 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.onResumeProcess = this.onResumeProcess.bind(this);
+        this.onGetResume = this.onGetResume.bind(this);
         this.resumeID = React.createRef();
         this.score = React.createRef();
+        this.resumeIDStored = React.createRef();
 
         this.state = {
 
@@ -105,20 +107,20 @@ class App extends React.Component {
         }
 
         await Utils.setTronWeb(window.tronWeb, contractAddress);
-        this.startEventListener();
+        //this.startEventListener();
         //this.fetchMessages();
 
     }
 
-    startEventListener() {
+    /*startEventListener() {
         Utils.contract.resumesProcessed().watch((err, { result }) => {
             if(err)
                 return console.error('Failed to bind event listener:', err);
 
-            console.log('Detected new message:', result.resumeID);
+            console.log('Detected new message:', result);
             //this.fetchMessage(+result.resumeID);
         });
-    }
+    }*/
 
   
     onResumeProcess() {
@@ -132,6 +134,11 @@ class App extends React.Component {
             title: 'Resume Processing Failed',
             type: 'error'
         }))
+    }
+
+    async onGetResume() {
+        const resume = await Utils.contract.getResume(this.resumeIDStored.current.value).call();
+        console.log(resume)
     }
 
     render() {
@@ -172,11 +179,20 @@ class App extends React.Component {
                   <br/>
 
       <button className="btn btn-primary" onClick={(event) => {event.preventDefault()
-                                                        this.onResumeProcess()}  }>Process Resumes </button>
+                                                        this.onResumeProcess()}  }>Process Resume </button>
 
       <br/>
       <br/>
-      <br/>
+                <label>
+                    ResumeID:
+                    <br/>
+                     <input type="number" ref={this.resumeIDStored} />
+                  </label>
+                  <br/>
+                  <br/>
+                  <button className="btn btn-primary" onClick={(event) => {event.preventDefault()
+                                                        this.onGetResume()}  }>Get Resume </button>
+
                 </div>
               </div>
         );
