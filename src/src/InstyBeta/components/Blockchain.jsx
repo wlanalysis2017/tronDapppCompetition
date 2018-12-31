@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 
 const FOUNDATION_ADDRESS = 'TWiWt5SEDzaEqS6kE5gandWMNfxR2B5xzg';
 ////////////////////////////////////////////////////////////////////////////////////
-const contractAddress = 'TVFWoPYK8tU3Tnyr6hb3yqazSozJu2vifX';   /// Add your contract address here
+const contractAddress = 'TR9jHpadtPbRKvYQn4AnrfRLDhvjfJu2Yx';   /// Add your contract address here
 ////////////////////////////////////////////////////////////////////////////////////
 
 class Blockchain extends React.Component {

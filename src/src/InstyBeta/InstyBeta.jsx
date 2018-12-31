@@ -344,9 +344,10 @@ mouseOverHandler(d, e) {
 
   }
 
-  async onSubmitResumes(resumeID, score) {
+  async onSubmitResumes(resumeID, jobTitle, score) {
     var self = this;
-   await Utils.contract.processResumes(resumeID, score*100, new Date().getTime()).send({
+    console.log(resumeID, jobTitle, score)
+   await Utils.contract.processResumes(resumeID, jobTitle, score*100, new Date().getTime()).send({
       shouldPollResponse: true,
       callValue: 0
   }).then(res => {
@@ -663,11 +664,11 @@ async submitResumeUpload(){
       this.setState({resumeScore: resumeData["Data"][key]["total"]});
       }
 
-    //console.log("checking TRON values from state in function submitDataToTron", " resumeID: ",this.state.resumeID," resumeScore: ", this.state.resumeScore, " resumeTimestamp: ", this.state.resumeTimestamp);
+    console.log("checking TRON values from state in function submitDataToTron", " resumeID: ",this.state.resumeID," resumeScore: ", this.state.formData.JobDescription, this.state.resumeScore, " resumeTimestamp: ", this.state.resumeTimestamp);
 
 
     // make Submit call to tron here
-    await this.onSubmitResumes(this.state.resumeID, this.state.resumeScore)
+    await this.onSubmitResumes(this.state.resumeID, this.state.formData.JobDescription.toString(), this.state.resumeScore)
     //and then call this function once that is complete:
      
     
@@ -755,9 +756,9 @@ handleDialogClose() {
               <Section
                 containerSize={1}
                 heading="Step 1."
-                subHeading="Provide position or job description (at least 10 characters)." >
+                subHeading="Provide Job Title (at least 10 characters)." >
                     <div style={dottedContainer} className="col-12 scores-dotted-container">
-                      <label style={labelStyle}>Job Description</label>
+                      <label style={labelStyle}>Job Title</label>
                       <TextValidator
                           multiLine={true}
                           rows={4}
@@ -771,7 +772,7 @@ handleDialogClose() {
                           hintStyle={hintStyle}
                           underlineFocusStyle={underlineStyle}
                           underlineStyle={underlineStyle}
-                          hintText="Please insert a brief summary of the role here..."
+                          hintText="Please Enter Job Title Here..."
                           style={{
                             fontSize: "14px",
                             color:"black",
