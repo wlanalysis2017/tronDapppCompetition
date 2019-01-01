@@ -26,7 +26,7 @@ import question from "../_constants/images/question-mark.png";
 
 const FOUNDATION_ADDRESS = 'TWiWt5SEDzaEqS6kE5gandWMNfxR2B5xzg';
 ////////////////////////////////////////////////////////////////////////////////////
-const contractAddress = 'TR9jHpadtPbRKvYQn4AnrfRLDhvjfJu2Yx';   /// Add your contract address here
+const contractAddress = 'TVEU8cCg8JJM1CUqQH21uoKojXz4qKSkBr';   /// Add your contract address here
 ////////////////////////////////////////////////////////////////////////////////////
 
 
