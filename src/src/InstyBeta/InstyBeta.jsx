@@ -25,6 +25,7 @@ import RaisedButton from "material-ui/RaisedButton";
 import Paper from "material-ui/Paper";
 import Background from "../_constants/images/insty.png";
 import viewButton from "../_constants/images/viewButton.png";
+import viewButtonResumeBlockchain from "../_constants/images/viewresumeblockchain.png";
 import viewButtonClosed from "../_constants/images/viewButtonClosed.png";
 import Loadable from 'react-loading-overlay';
 import {
@@ -120,9 +121,15 @@ const styles = {
     color: "white",
   },
   roundedButton2: {
-    marginLeft: "35%",
+    marginLeft: "25%",
     minWidth: "50px",
     position: "relative",
+  },
+  resumeBlockchainButton: {
+    marginLeft: "25px",
+    minWidth: "50px",
+    position: "relative",
+   
   },
   roundedButtonOverlay: {
     
@@ -138,6 +145,13 @@ const styles = {
    marginTop: "10px",
     textAlign: "center",
     color: "#666666",
+  },
+  paragraphStyleUnderlined:{
+     fontSize: "16px",
+   marginTop: "10px",
+    textAlign: "center",
+    color: "#666666",
+    textDecoration: "underline",
   },
   linkStyle: {
     textDecoration: "underline",
@@ -220,9 +234,7 @@ class InstyBeta extends React.Component {
       addedfile: file => {
         this.addedFileCallback(file);
       },
-      removedfile: file => {
-        this.removedFileCallback(file);
-      },
+      
       thumbnail: null,
       error:(response,serverResponse) => {
         this.fileUploadedError(response,serverResponse);
@@ -362,10 +374,18 @@ mouseOverHandler(d, e) {
     }
 
 
-  ).catch(err => Swal({
-      title: 'Resume Processing Failed',
-      type: 'error'
-  }))
+  ).catch(err => 
+
+    {
+
+      self.setState({loading: false});
+      Swal({
+          title: 'Resume Processing Failed.  Please Try again.',
+          type: 'error'
+      });
+
+
+    })
 }
 
 
@@ -474,7 +494,7 @@ onFileDrop() {
   handleSubmit(){
     //console.log("tried to submit");
     const formData = this.state.formData.JobDescription;
-    this.setState({ loading: true, loadingMessage: 'Uploading,Scoring, and Submitting Resume to Blockchain...'});
+    this.setState({ loading: true, loadingMessage: 'Uploading and Scoring your resume...'});
     this.setState({ analyzeButtonDisabled: true });
    
       this.handleFileSubmit();
@@ -644,12 +664,21 @@ async submitResumeUpload(){
        // console.log("here is front end insty response",response);
        //console.log("sucessfull call to /instybeta");
         self.setState({instyData: response.data});
+        self.setState({loadingMessage: "Your resume was scored.  Now it is being processed through the blockchain."})
         
         self.submitDataToTron(response.data);
     })
     .catch(function (response) {
         //handle error
-        //console.log("error on front end insty response",response);
+        console.log("error on front end insty response",response);
+        self.setState({loadingMessage: 'There was an internal error processing your resume.  Please check your resume file and try again.'});
+          setTimeout(
+        function() {
+            self.setState({loading: false});
+        }
+        .bind(self),
+        4000
+        );
     });
   }
 
@@ -658,6 +687,7 @@ async submitResumeUpload(){
 
   async submitDataToTron(resumeData){
   
+    
 
 
     for (var key in resumeData["Data"]){
@@ -751,6 +781,7 @@ handleDialogClose() {
                 <p style={styles.paragraphStyle}> If you're a candidate, rate your resume against the competition of candidates in the blockchain.  If you're a recruiter or employer, upload resumes to compare the candidates for a position you need to fill, and access previous resume submissions in the blockchain.</p>
           
                 <p style={styles.paragraphStyle}> InstyMatch is limited to 10 scoring requests per day.</p>
+                <a href="https://www.myjobtank.com" target="_blank"> <p style={styles.paragraphStyleUnderlined}> Find out more here!</p> </a>
                  </div>  
               </Section> 
               <Section
@@ -854,11 +885,11 @@ handleDialogClose() {
                    .map((item, index) => (
                   <div className="row" style={{margin:"15px"}} className="score-row">
                     
-                      <div style={{marginBottom:"2%"}} className="col-md-11">
+                      <div style={{marginBottom:"2%"}} className="col-md-10">
                        <label style={labelStyle}> {item[1]["total"]} / 100</label>
                      <Progress percent={item[1]["total"] } style={{overflowWrap: "break-word",}} status="success"  theme={{success: {symbol: item[0], color: this.getColor(item[1]["total"])}}}/>
                       </div>
-                      <div className="col-md-1 close-button-insty" style={{marginBottom:"25px !important"}}>
+                      <div className="col-md-1 close-button-insty" style={{marginBottom:"25px !important", marginLeft: "25px", marginTop: "5px"}}>
                       
                         <IconButton name={item[0]}   onClick={this.removedFileCallback}  >
                           <FaTimesCircle
@@ -874,11 +905,17 @@ handleDialogClose() {
 
                        </div>
                       <div style={{marginBottom:"1.5%"}} className="col-md-12 view-score-breakdown">
-                          
+                          <span>
                              <a> <img id={index}
                             onClick={this.handleCollapse}
                             style={styles.roundedButton2} className="view-score-breakdown-button" src={this.state.collapseArrays[index]?viewButton:viewButtonClosed}/> </a>
-                        
+
+
+                             <a> <img id={index}
+                            onClick={(event) => {event.preventDefault()
+                                                                this.onGetResume() }  }
+                            style={styles.resumeBlockchainButton} className="view-score-breakdown-button" src={viewButtonResumeBlockchain}/> </a>
+                          </span>
                             <Collapse isOpen={this.state.collapseArrays[index]}>
                                
                                  { this.state.collapseArrays[index] &&
@@ -903,29 +940,7 @@ handleDialogClose() {
    
               </Section> 
 
-               <Section
-                containerSize={1}
                
-                style={{marginBottom: "100px",}}
-                >
-
-                 <div className="insty-help-h6" style={{width: "60%", marginLeft: "37.5%"}}>
-
-                <label>
-                    ResumeID:
-                    <br/>
-                     <input type="text" value={this.state.resumeID} />
-                  </label>
-                  <br/>
-                  <br/>
-                  <button className="btn btn-primary" onClick={(event) => {event.preventDefault()
-                                                                this.onGetResume() }  }>Get Resume </button>
-
-              
-               
-                
-                 </div>  
-              </Section> 
 
               </div>
             }
