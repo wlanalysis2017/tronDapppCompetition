@@ -1,6 +1,7 @@
 import React from "react";
 import TronWeb from 'tronweb';
-import Utils from '../../utils';
+import Utils from '../utils';
+import TronLinkGuide from '../InstyBeta/components/TronLinkGuide';
 
 import { Router, Route } from "react-router-dom";
 import { connect } from "react-redux";
@@ -170,6 +171,14 @@ class App extends React.Component {
 
   render() {
     const { alert } = this.props;
+    if(!this.state.tronWeb.installed)
+            return <TronLinkGuide />;
+
+
+        if(!this.state.tronWeb.loggedIn)
+            return <TronLinkGuide installed />;
+        
+            
     return (
       /*<MuiThemeProvider muiTheme={muiTheme}>
 
