@@ -1,5 +1,6 @@
 import React from 'react';
 import TronWeb from 'tronweb';
+import TronLinkGuide from './TronLinkGuide';
 import Utils from '../../utils';
 import Swal from 'sweetalert2';
 
@@ -123,21 +124,18 @@ class Blockchain extends React.Component {
 
     async onGetResume() {
         const resume = await Utils.contract.getResume(this.resumeIDStored.current.value).call();
-        console.log(resume)
+        
     }
 
     render() {
         if(!this.state.tronWeb.installed)
-            return (<h1>Hey
-            </h1>
-            )
+            return <TronLinkGuide />;
 
 
         if(!this.state.tronWeb.loggedIn)
-            return (<div className="topnav">
-            </div>);
-
-        return (
+            return <TronLinkGuide installed />;
+        
+            return (
                 <div></div>
         );
     }
