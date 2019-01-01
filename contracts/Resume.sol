@@ -11,11 +11,11 @@ contract Resume {
   }
 
   function processResumes(string resumeID, string jobTitle, uint128 score, uint128 timestamp) public  {
-    resumes[keccak256(resumeID)] = ResumeInfo(resumeID, jobTitle, score, timestamp);
+    resumes[keccak256(abi.encodePacked(resumeID))] = ResumeInfo(resumeID, jobTitle, score, timestamp);
   }
 
   function getResume(string id) public view returns (string resumeID, string jobTitle, uint128 score, uint128 timestamp) {
-    ResumeInfo memory r = resumes[keccak256(id)];
+    ResumeInfo memory r = resumes[keccak256(abi.encodePacked(id))];
     return (r.resumeID, r.jobTitle, r.score, r.timestamp);
   } 
 
