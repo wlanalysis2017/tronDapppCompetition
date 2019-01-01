@@ -1,8 +1,8 @@
 import React from 'react';
 import TronWeb from 'tronweb';
 import TronLinkGuide from './TronLinkGuide';
+import Instybeta from '../'
 import Utils from '../../utils';
-import Swal from 'sweetalert2';
 
 const FOUNDATION_ADDRESS = 'TWiWt5SEDzaEqS6kE5gandWMNfxR2B5xzg';
 ////////////////////////////////////////////////////////////////////////////////////
@@ -20,7 +20,6 @@ class Blockchain extends React.Component {
         this.resumeIDStored = React.createRef();
 
         this.state = {
-
               tronWeb: {
                   installed: false,
                   loggedIn: false
@@ -30,7 +29,6 @@ class Blockchain extends React.Component {
     }
 
     async componentDidMount() {
-
         this.setState({loading:true})
         await new Promise(resolve => {
             const tronWebState = {
@@ -109,24 +107,6 @@ class Blockchain extends React.Component {
         await Utils.setTronWeb(window.tronWeb, contractAddress);
     }
   
-    onResumeProcess(resumeID, score) {
-        Utils.contract.processResumes(resumeID, score*100, new Date().getTime()).send({
-            shouldPollResponse: true,
-            callValue: 0
-        }).then(res => Swal({
-            title: 'Resume Processing Succeeded',
-            type: 'success'
-        })).catch(err => Swal({
-            title: 'Resume Processing Failed',
-            type: 'error'
-        }))
-    }
-
-    async onGetResume() {
-        const resume = await Utils.contract.getResume(this.resumeIDStored.current.value).call();
-        
-    }
-
     render() {
         if(!this.state.tronWeb.installed)
             return <TronLinkGuide />;

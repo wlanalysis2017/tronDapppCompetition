@@ -716,7 +716,6 @@ handleDialogClose() {
 
     return (
       <div style={{}}>
-       <Blockchain></Blockchain>
         
          <Dialog
           open={this.state.dialogOpen}
