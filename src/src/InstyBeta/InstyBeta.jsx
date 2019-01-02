@@ -358,33 +358,21 @@ mouseOverHandler(d, e) {
 
   async onSubmitResumes(resumeID, jobTitle, score) {
     var self = this;
-    console.log(resumeID, jobTitle, score)
    await Utils.contract.processResumes(resumeID, jobTitle, score*100, new Date().getTime()).send({
       shouldPollResponse: true,
       callValue: 0
   }).then(res => {
-
       Swal({
         title: 'Resume Processing Succeeded',
         type: 'success'
     });
     self.handlePostSuccess(self.state.instyData);
-
-
-    }
-
-
-  ).catch(err => 
-
-    {
-
+    }).catch(err => {
       self.setState({loading: false});
       Swal({
           title: 'Resume Processing Failed.  Please Try again.',
           type: 'error'
       });
-
-
     })
 }
 
@@ -773,7 +761,7 @@ handleDialogClose() {
                  <div style={{width: "75%", marginLeft: "12.5%"}}>
 
                 <h6 style={styles.headingStyle}> InstyMatch:  </h6>
-
+                <img src="/dist/MJTXTRON.png"></img>
                 <h6 style={styles.headingStyle}> Simple, impartial, decentralized and lightning-fast. </h6>
 
                 <p style={{marginTop: "50px", textAlign: "center", fontSize: "16px", color: "#666666"}}> InstyMatch is a Tron Dapp that finds a correlation score between a job description and a resume. </p>
