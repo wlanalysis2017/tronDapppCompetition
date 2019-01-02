@@ -23,7 +23,8 @@ import RaisedButton from "material-ui/RaisedButton";
 
 // Font
 import Paper from "material-ui/Paper";
-import Background from "../_constants/images/insty.png";
+import Background from "../_constants/images/TRONBG.png";
+import tronLOGO from "../_constants/images/tronLogo.png";
 import viewButton from "../_constants/images/viewButton.png";
 import viewButtonResumeBlockchain from "../_constants/images/viewresumeblockchain.png";
 import viewButtonClosed from "../_constants/images/viewButtonClosed.png";
@@ -70,7 +71,7 @@ const inputStyle = {
   backgroundColor: "rgba(243,243,243,0.4)",
   borderRadius: "25px",
   padding: "0 10px",
-  color: "black",
+  color: "#fff",
 
   // textAlign: "right"
 };
@@ -78,7 +79,7 @@ const inputStyle = {
 const hintStyle = {
 left: "10px",
 marginBottom:"50px",
-color:"black",
+color:"#fff",
 };
 
 const underlineStyle = {
@@ -100,7 +101,8 @@ const styles = {
     marginTop: "10%",
     width: "100%",
     display: "inline-block",
-    backgroundColor: "white",
+    backgroundColor: "rgba(0,0,0,.85)",
+    opacity: "75%",
     borderStyle: "solid",
     borderColor: "white",
     borderWidth: "2px"
@@ -144,13 +146,13 @@ const styles = {
    fontSize: "16px",
    marginTop: "10px",
     textAlign: "center",
-    color: "#666666",
+    color: "#fff",
   },
   paragraphStyleUnderlined:{
      fontSize: "16px",
    marginTop: "10px",
     textAlign: "center",
-    color: "#666666",
+    color: "#fff",
     textDecoration: "underline",
   },
   linkStyle: {
@@ -730,14 +732,14 @@ handleDialogClose() {
                 onSubmit={this.handleSubmit}
                 onError={errors => this.handleFormErrors(errors)}
               >
-          <Section style={{padding: "20px"}}containerSize={100}>
+          <Section containerSize={100}>
            
           </Section>
 
           <Section
             containerSize={1}
             style={{
-              background: "url(" + Background + ") no-repeat",
+              background: "url(" + Background + ") repeat-y",
               backgroundSize: "fixed",
               paddingBottom: "5%"
             }}
@@ -749,27 +751,31 @@ handleDialogClose() {
                   marginTop: "30px",
                   marginBottom: "30px",
                   color: "#009dd6"
-                }}
-              />
+                }}/>
               
                 <Section
                 containerSize={1}
                
-                style={{marginBottom: "10px"}}
-                >
+                style={{marginBottom: "10px"}}>
+                <div className="row">
+                  <div className="col-md-4" style={{marginLeft: "20%"}}>
+                  <img src={tronLOGO} />
+                  </div>
+                  </div> 
 
-                 <div style={{width: "75%", marginLeft: "12.5%"}}>
+                   <div className="col-md-6" style={{width: "75%", marginLeft: "12.5%"}}>
 
-                <h6 style={styles.headingStyle}> InstyMatch:  </h6>
-                <img src="/dist/MJTXTRON.png"></img>
-                <h6 style={styles.headingStyle}> Simple, impartial, decentralized and lightning-fast. </h6>
+                  <h6 style={styles.headingStyle}> InstyMatch:  </h6>
+                
+                  <h6 style={styles.headingStyle}> Simple, impartial, decentralized and lightning-fast. </h6>
 
-                <p style={{marginTop: "50px", textAlign: "center", fontSize: "16px", color: "#666666"}}> InstyMatch is a Tron Dapp that finds a correlation score between a job description and a resume. </p>
-                <p style={styles.paragraphStyle}> If you're a candidate, rate your resume against the competition of candidates in the blockchain.  If you're a recruiter or employer, upload resumes to compare the candidates for a position you need to fill, and access previous resume submissions in the blockchain.</p>
-          
-                <p style={styles.paragraphStyle}> InstyMatch is limited to 10 scoring requests per day.</p>
-                <a href="https://www.myjobtank.com" target="_blank"> <p style={styles.paragraphStyleUnderlined}> Find out more here!</p> </a>
-                 </div>  
+                  <p style={{marginTop: "50px", textAlign: "center", fontSize: "16px", color: "#fff"}}> InstyMatch is a Tron Dapp that finds a correlation score between a job description and a resume. </p>
+                  <p style={styles.paragraphStyle}> If you're a candidate, rate your resume against the competition of candidates in the blockchain.  If you're a recruiter or employer, upload resumes to compare the candidates for a position you need to fill, and access previous resume submissions in the blockchain.</p>
+            
+                  <p style={styles.paragraphStyle}> InstyMatch is limited to 10 scoring requests per day.</p>
+                  <a href="https://www.myjobtank.com" target="_blank"> <p style={styles.paragraphStyleUnderlined}> Find out more here!</p> </a>
+                   </div> 
+                
               </Section> 
               <Section
                 containerSize={1}
@@ -793,7 +799,7 @@ handleDialogClose() {
                           hintText="Please Enter Job Title Here..."
                           style={{
                             fontSize: "14px",
-                            color:"black",
+                            color:"#fff",
                           }}
                           validators={["required", "minStringLength:10"]}
                           errorMessages={[
