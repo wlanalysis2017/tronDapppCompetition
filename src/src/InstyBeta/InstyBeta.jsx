@@ -56,6 +56,7 @@ const dottedContainer = {
   padding: "40px 40px 40px",
   margin: "10px 0",
   overflow: "hidden",
+  color: "#fff !important",
 
 };
 
@@ -71,10 +72,12 @@ const inputStyle = {
   backgroundColor: "rgba(243,243,243,0.4)",
   borderRadius: "25px",
   padding: "0 10px",
-  color: "#fff",
+  color: "#fff !important" ,
 
   // textAlign: "right"
 };
+
+
 
 const hintStyle = {
 left: "10px",
@@ -360,7 +363,8 @@ mouseOverHandler(d, e) {
 
   async onSubmitResumes(resumeID, jobTitle, score) {
     var self = this;
-   await Utils.contract.processResumes(resumeID, jobTitle, score*100, new Date().getTime()).send({
+    console.log("checking math", (Math.floor(score * 100) ));
+   await Utils.contract.processResumes(resumeID, jobTitle, (Math.floor(score * 100) ) , new Date().getTime()).send({
       shouldPollResponse: true,
       callValue: 0
   }).then(res => {
@@ -371,9 +375,11 @@ mouseOverHandler(d, e) {
     self.handlePostSuccess(self.state.instyData);
     }).catch(err => {
       self.setState({loading: false});
+      console.log("checking error for onSubmitResumes", err);
       Swal({
           title: 'Resume Processing Failed.  Please Try again.',
-          type: 'error'
+          type: 'error',
+
       });
     })
 }
