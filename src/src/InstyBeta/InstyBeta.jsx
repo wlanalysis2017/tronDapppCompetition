@@ -454,7 +454,7 @@ mouseOverHandler(d, e) {
 
   async onSubmitResumes(resumeID, jobTitle, score) {
     var self = this;
-    console.log("checking math", (Math.floor(score * 100) ));
+    //console.log("checking math", (Math.floor(score * 100) ));
    await Utils.contract.processResumes(resumeID, jobTitle, (Math.floor(score * 100) ) , new Date().getTime()).send({
       shouldPollResponse: true,
       callValue: 0
@@ -781,7 +781,7 @@ async submitResumeUpload(){
       this.setState({resumeScore: resumeData["Data"][key]["total"]});
       }
 
-    console.log("checking TRON values from state in function submitDataToTron", " resumeID: ",this.state.resumeID," resumeScore: ", this.state.formData.JobDescription, this.state.resumeScore, " resumeTimestamp: ", this.state.resumeTimestamp);
+    //console.log("checking TRON values from state in function submitDataToTron", " resumeID: ",this.state.resumeID," resumeScore: ", this.state.formData.JobDescription, this.state.resumeScore, " resumeTimestamp: ", this.state.resumeTimestamp);
 
 
     // make Submit call to tron here
