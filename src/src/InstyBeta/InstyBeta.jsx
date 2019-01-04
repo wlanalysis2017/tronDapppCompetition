@@ -9,6 +9,8 @@ import 'babel-polyfill';
 import axios from "axios";
 // Custom Components
 import Utils from '../utils'
+import TronLinkGuide from './components/TronLinkGuide';
+
 import Section from "./components/Section";
 import Blockchain from "./components/Blockchain";
 
@@ -42,6 +44,11 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+
+const FOUNDATION_ADDRESS = 'TWiWt5SEDzaEqS6kE5gandWMNfxR2B5xzg';
+////////////////////////////////////////////////////////////////////////////////////
+const contractAddress = 'TURocJbr52B2Sin3YF18QFwUZ5toTKVwqT';   /// Add your contract address here
+////////////////////////////////////////////////////////////////////////////////////
 // Theme
 const muiTheme = getMuiTheme({
   palette: {
@@ -178,6 +185,10 @@ class InstyBeta extends React.Component {
     super(props);
 
     this.state = {
+       tronWeb: {
+          installed: false,
+          loggedIn: false
+      },
       resumeBlockChainObject: {},
       dialogOpen: false,
         instyData: {},
@@ -305,6 +316,86 @@ class InstyBeta extends React.Component {
  initCallback (dropzone) {
     this.setState({myDropZone: dropzone});
 }
+
+async componentDidMount() {
+   
+    await new Promise(resolve => {
+        const tronWebState = {
+            installed: !!window.tronWeb,
+            loggedIn: window.tronWeb && window.tronWeb.ready
+        };
+
+        if(tronWebState.installed) {
+            this.setState({
+                tronWeb:
+                tronWebState
+            });
+
+            return resolve();
+        }
+
+        let tries = 0;
+
+        const timer = setInterval(() => {
+            if(tries >= 10) {
+                const TRONGRID_API = 'https://api.trongrid.io';
+
+                window.tronWeb = new TronWeb(
+                    TRONGRID_API,
+                    TRONGRID_API,
+                    TRONGRID_API
+                );
+
+                this.setState({
+                    tronWeb: {
+                        installed: false,
+                        loggedIn: false
+                    }
+                });
+
+                clearInterval(timer);
+                return resolve();
+            }
+
+            tronWebState.installed = !!window.tronWeb;
+            tronWebState.loggedIn = window.tronWeb && window.tronWeb.ready;
+
+            if(!tronWebState.installed)
+                return tries++;
+
+            this.setState({
+                tronWeb: tronWebState
+            });
+
+            resolve();
+        }, 100);
+    });
+
+    if(!this.state.tronWeb.loggedIn) {
+        // Set default address (foundation address) used for contract calls
+        // Directly overwrites the address object as TronLink disabled the
+        // function call
+        window.tronWeb.defaultAddress = {
+            hex: window.tronWeb.address.toHex(FOUNDATION_ADDRESS),
+            base58: FOUNDATION_ADDRESS
+        };
+
+        window.tronWeb.on('addressChanged', () => {
+            if(this.state.tronWeb.loggedIn)
+                return;
+
+            this.setState({
+                tronWeb: {
+                    installed: true,
+                    loggedIn: true
+                }
+            });
+        });
+    }
+    await Utils.setTronWeb(window.tronWeb, contractAddress);
+}
+
+
 
 mouseOverHandler(d, e) {
     this.setState({
@@ -722,6 +813,21 @@ handleDialogClose() {
           
           <DialogContent>
            <ReactJson src={this.state.resumeBlockChainObject} />
+          </DialogContent>
+       
+        </Dialog>
+        <Dialog
+        disableBackdropClick={true}
+        disableEscapeKeyDown={true}
+          open={!this.state.tronWeb.installed || !this.state.tronWeb.loggedIn}
+          
+          aria-labelledby="form-dialog-title"
+        >
+        
+          
+          <DialogContent>{
+            this.state.tronWeb.installed? (<TronLinkGuide installed />) : (<TronLinkGuide />)
+          }
           </DialogContent>
        
         </Dialog>
