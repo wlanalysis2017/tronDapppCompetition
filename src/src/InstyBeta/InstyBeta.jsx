@@ -47,7 +47,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 const FOUNDATION_ADDRESS = 'TWiWt5SEDzaEqS6kE5gandWMNfxR2B5xzg';
 ////////////////////////////////////////////////////////////////////////////////////
-const contractAddress = 'TURocJbr52B2Sin3YF18QFwUZ5toTKVwqT';   /// Add your contract address here
+const contractAddress = 'TUBTdYQVhbe5PoqkkDWiGV8YGBuRvy62MK';   /// Add your contract address here
 ////////////////////////////////////////////////////////////////////////////////////
 // Theme
 const muiTheme = getMuiTheme({
@@ -306,6 +306,7 @@ class InstyBeta extends React.Component {
      this.testFrontEndInstyBeta = this.testFrontEndInstyBeta.bind(this);
      this.handlePostSuccess = this.handlePostSuccess.bind(this);
      this.onGetResume = this.onGetResume.bind(this);
+     this.onGetResumes = this.onGetResumes.bind(this);
      this.onSubmitResumes = this.onSubmitResumes.bind(this);
      this.TronHelperFunction = this.TronHelperFunction.bind(this);
      this.submitResumeUpload = this.submitResumeUpload.bind(this);
@@ -449,7 +450,15 @@ mouseOverHandler(d, e) {
     //console.log(resume);
     await this.setState({resumeBlockChainObject: resume});
     await this.setState({dialogOpen: true});
+  }
 
+ async onGetResumes() {
+   //await console.log(tronWeb)
+   //const reses = await Utils.contract.resumeMapping(window.tronWeb.defaultAddress.hex).call();
+    //console.log(reses)
+   const resumes = await Utils.contract.getResumes().call();
+
+   console.log(resumes);
   }
 
   async onSubmitResumes(resumeID, jobTitle, score) {
@@ -889,6 +898,8 @@ handleDialogClose() {
                    </div> 
                 
               </Section> 
+              <button onClick={(event) => {event.preventDefault()
+                                            this.onGetResumes() }  }>Get Resumes</button>
               <Section
                 containerSize={1}
                 heading="Step 1."

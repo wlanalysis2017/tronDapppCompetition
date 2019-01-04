@@ -23,16 +23,6 @@ import Section from "../AnalyzePage/components/Section";
 import logo from "../_constants/images/logo-mjt.png";
 import question from "../_constants/images/question-mark.png";
 
-
-const FOUNDATION_ADDRESS = 'TWiWt5SEDzaEqS6kE5gandWMNfxR2B5xzg';
-////////////////////////////////////////////////////////////////////////////////////
-//const contractAddress = 'TURocJbr52B2Sin3YF18QFwUZ5toTKVwqT';   /// Add your contract address here
-const contractAddress = 'TMtHtKNAjoHPsX5KzVk9Y19MkcDzgr47JL';
-////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
 const muiTheme = getMuiTheme({
   palette: {
     primary1Color: orange500,

@@ -6,7 +6,7 @@ import Utils from '../../utils';
 
 const FOUNDATION_ADDRESS = 'TWiWt5SEDzaEqS6kE5gandWMNfxR2B5xzg';
 ////////////////////////////////////////////////////////////////////////////////////
-const contractAddress = 'TR9jHpadtPbRKvYQn4AnrfRLDhvjfJu2Yx';   /// Add your contract address here
+const contractAddress = 'TLBkbEgFDP3w3Xqd5mqfWGUAxLVDZokVdy';   /// Add your contract address here
 ////////////////////////////////////////////////////////////////////////////////////
 
 class Blockchain extends React.Component {
