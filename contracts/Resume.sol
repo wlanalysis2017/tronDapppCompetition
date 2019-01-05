@@ -4,11 +4,7 @@ contract Resume {
 
   mapping(bytes32 => ResumeInfo) resumes;
   mapping (address=>ResumeInfo[]) public resumeMapping;
-  bytes32[] scores;
-  bytes32[] timestamps;
   
-  ResumeInfo[] resumeArray;
-
   struct ResumeInfo {
     string resumeID;
     string jobTitle; 
@@ -27,11 +23,11 @@ contract Resume {
   } 
 
  
-    function getResumeCount() public constant returns(uint) {
-        return resumeMapping[msg.sender].length;
+  function getResumeCount() public constant returns(uint) {
+      return resumeMapping[msg.sender].length;
     }
 
     function getResumeByIndex(uint index) public constant returns(string, string, uint128, uint128) {
-        return (resumeMapping[msg.sender][index].resumeID, resumeMapping[msg.sender][index].jobTitle, resumeMapping[msg.sender][index].score, resumeMapping[msg.sender][index].timestamp);
+      return (resumeMapping[msg.sender][index].resumeID, resumeMapping[msg.sender][index].jobTitle, resumeMapping[msg.sender][index].score, resumeMapping[msg.sender][index].timestamp);
     }
 }
