@@ -1,5 +1,4 @@
 pragma solidity ^0.4.23;
-pragma experimental ABIEncoderV2;
 contract Resume {
 
   mapping(bytes32 => ResumeInfo) resumes;
