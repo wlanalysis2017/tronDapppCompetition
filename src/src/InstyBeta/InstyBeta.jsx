@@ -44,7 +44,11 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 const FOUNDATION_ADDRESS = 'TWiWt5SEDzaEqS6kE5gandWMNfxR2B5xzg';
 ////////////////////////////////////////////////////////////////////////////////////
 const contractAddress = 'TMv3mYggYs6SUptq9EtVHYWbJmhw1WLy5C';   /// Add your contract address here
@@ -85,7 +89,6 @@ const inputStyle = {
 };
 
 
-
 const hintStyle = {
 left: "10px",
 marginBottom:"50px",
@@ -106,6 +109,23 @@ const iconStyle = {
 };
 
 const styles = {
+
+resumeTableCell:{
+  fontSize: "24px",
+  color: "#666666",
+},
+resumeTableCellSmall:{
+  fontSize: "16px",
+  color: "#666666",
+},
+resumeTableCellFirst:{
+  fontSize: "24px",
+  color: "#666666",
+},
+  resumeTable:{
+    fontSize: "24px",
+    color: "#00ADF3",
+  },
   paperStyle: {
     position: "relative",
     marginTop: "10%",
@@ -165,6 +185,13 @@ const styles = {
     color: "#fff",
     textDecoration: "underline",
   },
+  paragraphStyleUnderlinedBig:{
+     fontSize: "32px",
+   marginTop: "25px",
+    textAlign: "center",
+    color: "#00ADF3",
+    textDecoration: "underline",
+  },
   linkStyle: {
     textDecoration: "underline",
     color: "#00ADF3 !important",
@@ -178,6 +205,18 @@ const styles = {
     paddingLeftt: "45px"
   },
 };
+function timeConverter(timestamp){
+  var a = new Date(timestamp);
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var year = a.getFullYear();
+  var month = months[a.getMonth()];
+  var date = a.getDate();
+  var hour = a.getHours();
+  var min = a.getMinutes();
+  var sec = a.getSeconds();
+  var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+  return time;
+};
 
 class InstyBeta extends React.Component {
   constructor(props) {
@@ -185,6 +224,8 @@ class InstyBeta extends React.Component {
     super(props);
 
     this.state = {
+      resumeTableOpen: false,
+      resumeTable: [],
        tronWeb: {
           installed: false,
           loggedIn: false
@@ -452,18 +493,7 @@ mouseOverHandler(d, e) {
     await this.setState({dialogOpen: true});
   }
 
- async onGetResumes() {
-   //await console.log(tronWeb)
-   //const reses = await Utils.contract.resumeMapping(window.tronWeb.defaultAddress.hex).call();
-    //console.log(reses)
-   const resumeCountHex = await Utils.contract.getResumeCount().call()
-   const resumeCount = parseInt(resumeCountHex._hex)
-   const resumeInfo = [];
-   for (var i =0; i < resumeCount; i++) {
-    resumeInfo.push(await Utils.contract.getResumeByIndex(i).call())
-   }
-   console.log(resumeInfo)
-  }
+
 
 
   async onSubmitResumes(resumeID, jobTitle, score) {
@@ -806,8 +836,22 @@ async submitResumeUpload(){
   }
 
 handleDialogClose() {
-    this.setState({ dialogOpen: false});
+    this.setState({ dialogOpen: false,resumeTableOpen:false});
   };
+   async onGetResumes() {
+   //await console.log(tronWeb)
+   //const reses = await Utils.contract.resumeMapping(window.tronWeb.defaultAddress.hex).call();
+    //console.log(reses)
+   const resumeCountHex = await Utils.contract.getResumeCount().call()
+   const resumeCount = parseInt(resumeCountHex._hex)
+   const resumeInfo = [];
+   for (var i =0; i < resumeCount; i++) {
+    resumeInfo.push(await Utils.contract.getResumeByIndex(i).call())
+   }
+   console.log(resumeInfo)
+
+   this.setState({resumeTable: resumeInfo,resumeTableOpen: true});
+  }
 
   render() {
     const {formData} = this.state;
@@ -819,17 +863,54 @@ handleDialogClose() {
       <div style={{}}>
         
          <Dialog
-          open={this.state.dialogOpen}
+          open={this.state.dialogOpen || this.state.resumeTableOpen}
+          fullWidth={true}
+          maxWidth="lg"
+          
           onClose={this.handleDialogClose}
           aria-labelledby="form-dialog-title"
         >
         
           
           <DialogContent>
-           <ReactJson src={this.state.resumeBlockChainObject} />
+           {this.state.resumeTableOpen? (
+
+            <Table style={styles.resumeTable}>
+        <TableHead>
+          <TableRow>
+            <TableCell style={styles.resumeTable}>ResumeID</TableCell>
+            <TableCell style={styles.resumeTable} >Job Title</TableCell>
+            <TableCell style={styles.resumeTable} >Score</TableCell>
+            <TableCell style={styles.resumeTable} >Timestamp</TableCell>
+            
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {this.state.resumeTable.length > 0 ? this.state.resumeTable.map( (row,index) => {
+           
+           
+           
+            return (
+              <TableRow key={index}>
+                <TableCell component="th" style={styles.resumeTableCellFirst} scope="row">
+                  {row[0]}
+                </TableCell>
+                <TableCell style={styles.resumeTableCell} >{row[1]}</TableCell>
+                <TableCell style={styles.resumeTableCell}>{parseInt(row[2]["_hex"])/100}</TableCell>
+                <TableCell style={styles.resumeTableCell} >{ timeConverter(parseInt(row[3]["_hex"]))}</TableCell>
+                
+                
+              </TableRow>
+            );
+          }): (<div></div>)}
+        </TableBody>
+      </Table>
+
+            )   : (<ReactJson src={this.state.resumeBlockChainObject} />)}
           </DialogContent>
        
         </Dialog>
+
         <Dialog
         disableBackdropClick={true}
         disableEscapeKeyDown={true}
@@ -900,11 +981,12 @@ handleDialogClose() {
             
                   <p style={styles.paragraphStyle}> InstyMatch is limited to 10 scoring requests per day.</p>
                   <a href="https://www.myjobtank.com" target="_blank"> <p style={styles.paragraphStyleUnderlined}> Find out more here!</p> </a>
+                  <a onClick={(event) => {event.preventDefault()
+                                            this.onGetResumes() }  } target="_blank"> <p style={styles.paragraphStyleUnderlinedBig}> View blockchain submissions</p> </a>
                    </div> 
                 
               </Section> 
-              <button onClick={(event) => {event.preventDefault()
-                                            this.onGetResumes() }  }>Get Resumes</button>
+              
               <Section
                 containerSize={1}
                 heading="Step 1."
