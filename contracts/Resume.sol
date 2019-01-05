@@ -4,6 +4,10 @@ contract Resume {
 
   mapping(bytes32 => ResumeInfo) resumes;
   mapping (address=>ResumeInfo[]) public resumeMapping;
+  bytes32[] scores;
+  bytes32[] timestamps;
+  
+  ResumeInfo[] resumeArray;
 
   struct ResumeInfo {
     string resumeID;
@@ -22,7 +26,15 @@ contract Resume {
     return (r.resumeID, r.jobTitle, r.score, r.timestamp);
   } 
 
-  function getResumes() public constant returns(ResumeInfo[]) {
-    return resumeMapping[msg.sender];
+ 
+function getResumeIDJob() public returns(string[], string[]) {
+    string[] resumeIDs;
+    string[] jobTitles;
+    for (uint i=0; i < resumeMapping[msg.sender].length; i++) {
+      resumeIDs.push(resumeMapping[msg.sender][i].resumeID);
+      jobTitles.push(resumeMapping[msg.sender][i].jobTitle);
+    }
+   return (resumeIDs, jobTitles);
   }
+
 }
