@@ -49,10 +49,12 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+
 const FOUNDATION_ADDRESS = 'TWiWt5SEDzaEqS6kE5gandWMNfxR2B5xzg';
 ////////////////////////////////////////////////////////////////////////////////////
-const contractAddress = 'TMv3mYggYs6SUptq9EtVHYWbJmhw1WLy5C';   /// Add your contract address here
-////////////////////////////////////////////////////////////////////////////////////
+const contractAddress = 'THJKK4NUXqkdriKxef6xkUtp4eyQc258QP';   /// testnet
+//const contractAddress = 'TRQNHzA8tTPVmrQsiZXbxFt7rfLdYsgt1F';   /// mainnet
+
 // Theme
 const muiTheme = getMuiTheme({
   palette: {
@@ -550,19 +552,19 @@ onFileDrop() {
             this.setState({loading: false});
         }
         .bind(this),
-        4000
+        6000
         );
 
       }
       else if (serverResponse === 'Error'){
 
-         this.setState({loadingMessage: 'There was an internal error processing your resume(s).'});
+         this.setState({loadingMessage: 'Sorry, we are unable to process this resume. Please try again, or upload a different resume.'});
           setTimeout(
         function() {
             this.setState({loading: false});
         }
         .bind(this),
-        4000
+        6000
         );
 
       }
@@ -582,13 +584,13 @@ onFileDrop() {
   fileUploadedError(response,serverResponse) {
     //console.log("checking result from uploadhandler due to error", serverResponse);
 
-      this.setState({loadingMessage: 'There was an error processing your resumes.  Please try again.'});
+      this.setState({loadingMessage: 'Sorry, we are unable to process this resume. Please try again, or upload a different resume.'});
       setTimeout(
     function() {
         this.setState({loading: false});
     }
     .bind(this),
-    3000
+    6000
 );
   }
 
@@ -756,14 +758,19 @@ async submitResumeUpload(){
           self.setState({resumeID : response.data["Data"]});
           //console.log("checking state tron", self.state.resumeID);
           self.testFrontEndInstyBeta();
-
-          
-
             }
       })
       .catch(function (error) {
         //console.log('error in /resumeupload ', error);
-        
+        console.log("error on front end insty response",response);
+        self.setState({loadingMessage: 'Sorry, we are unable to process this resume. Please try again, or upload a different resume.'});
+          setTimeout(
+        function() {
+            self.setState({loading: false});
+        }
+        .bind(self),
+        6000
+        );
       });
 }
 
@@ -802,13 +809,13 @@ async submitResumeUpload(){
     .catch(function (response) {
         //handle error
         console.log("error on front end insty response",response);
-        self.setState({loadingMessage: 'There was an internal error processing your resume.  Please check your resume file and try again.'});
+        self.setState({loadingMessage: 'Sorry, we are unable to process this resume. Please try again, or upload a different resume.'});
           setTimeout(
         function() {
             self.setState({loading: false});
         }
         .bind(self),
-        4000
+        6000
         );
     });
   }
