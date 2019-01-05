@@ -47,7 +47,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 const FOUNDATION_ADDRESS = 'TWiWt5SEDzaEqS6kE5gandWMNfxR2B5xzg';
 ////////////////////////////////////////////////////////////////////////////////////
-const contractAddress = 'TYgiUby64YDBrK65uZPw3zjs6KrswcpWYr';   /// Add your contract address here
+const contractAddress = 'TMv3mYggYs6SUptq9EtVHYWbJmhw1WLy5C';   /// Add your contract address here
 ////////////////////////////////////////////////////////////////////////////////////
 // Theme
 const muiTheme = getMuiTheme({
@@ -456,14 +456,13 @@ mouseOverHandler(d, e) {
    //await console.log(tronWeb)
    //const reses = await Utils.contract.resumeMapping(window.tronWeb.defaultAddress.hex).call();
     //console.log(reses)
-   const resumes = await Utils.contract.getResumeIDJob().send({
-    shouldPollResponse: true,
-    callValue: 0
-}).then(res => {
-    console.log(res);
-  }).catch(err => {
-    console.log("checking error for onSubmitResumes", err);
-  })
+   const resumeCountHex = await Utils.contract.getResumeCount().call()
+   const resumeCount = parseInt(resumeCountHex._hex)
+   const resumeInfo = [];
+   for (var i =0; i < resumeCount; i++) {
+    resumeInfo.push(await Utils.contract.getResumeByIndex(i).call())
+   }
+   console.log(resumeInfo)
   }
 
 

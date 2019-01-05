@@ -27,14 +27,11 @@ contract Resume {
   } 
 
  
-function getResumeIDJob() public returns(string[], string[]) {
-    string[] resumeIDs;
-    string[] jobTitles;
-    for (uint i=0; i < resumeMapping[msg.sender].length; i++) {
-      resumeIDs.push(resumeMapping[msg.sender][i].resumeID);
-      jobTitles.push(resumeMapping[msg.sender][i].jobTitle);
+    function getResumeCount() public constant returns(uint) {
+        return resumeMapping[msg.sender].length;
     }
-   return (resumeIDs, jobTitles);
-  }
 
+    function getResumeByIndex(uint index) public constant returns(string, string, uint128, uint128) {
+        return (resumeMapping[msg.sender][index].resumeID, resumeMapping[msg.sender][index].jobTitle, resumeMapping[msg.sender][index].score, resumeMapping[msg.sender][index].timestamp);
+    }
 }
