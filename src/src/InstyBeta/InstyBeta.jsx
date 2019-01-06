@@ -220,6 +220,7 @@ function timeConverter(timestamp){
   return time;
 };
 
+
 class InstyBeta extends React.Component {
   constructor(props) {
    
@@ -356,6 +357,7 @@ class InstyBeta extends React.Component {
      this.submitResumeUpload = this.submitResumeUpload.bind(this);
      this.submitDataToTron = this.submitDataToTron.bind(this);
      this.handleDialogClose = this.handleDialogClose.bind(this);
+     this.tryGetResume = this.tryGetResume.bind(this);
   }
 
  initCallback (dropzone) {
@@ -505,21 +507,59 @@ mouseOverHandler(d, e) {
     await this.setState({dialogOpen: true});
   }
 
+async tryGetResume(resumeID,repetitions){
 
+  var self = this;
+  var index = 0;
+
+  var interval = setInterval(async function () {
+
+    if (index++ < repetitions){
+
+      await Utils.contract.getResume(resumeID).call()
+      .then(res => {
+        Swal({
+          title: 'Resume Processing Succeeded',
+          type: 'success'
+      });
+      console.log("async call went through", index);
+      console.log("checking result", res);
+      self.handlePostSuccess(self.state.instyData);
+      clearInterval(interval);
+
+      }).catch(err => {
+        self.setState({loadingMessage: 'Error in tryGetResume' + index});
+
+        console.log("checking error in trygetresume", err);
+        
+      })
+
+    }
+    else{
+      clearInterval(interval);
+      self.setState({loading: false});
+      Swal({
+          title: 'Resume Processing Failed.  Please Try again.',
+          type: 'error',
+
+      });
+    }
+}, 3000);
+
+
+
+
+}
 
 
   async onSubmitResumes(resumeID, jobTitle, score) {
     var self = this;
     //console.log("checking math", (Math.floor(score * 100) ));
    await Utils.contract.processResumes(resumeID, jobTitle, (Math.floor(score * 100) ) , new Date().getTime()).send({
-      shouldPollResponse: true,
+      shouldPollResponse: false,
       callValue: 0
   }).then(res => {
-      Swal({
-        title: 'Resume Processing Succeeded',
-        type: 'success'
-    });
-    self.handlePostSuccess(self.state.instyData);
+      self.tryGetResume(resumeID,20);
     }).catch(err => {
       self.setState({loading: false});
       console.log("checking error for onSubmitResumes", err);
@@ -869,6 +909,7 @@ handleDialogClose() {
    //await console.log(tronWeb)
    //const reses = await Utils.contract.resumeMapping(window.tronWeb.defaultAddress.hex).call();
     //console.log(reses)
+    this.setState({loading: true, loadingMessage: "Loading Table..."});
    const resumeCountHex = await Utils.contract.getResumeCount().call()
    const resumeCount = parseInt(resumeCountHex._hex)
    const resumeInfo = [];
@@ -877,8 +918,9 @@ handleDialogClose() {
    }
    console.log(resumeInfo)
 
-   this.setState({resumeTable: resumeInfo,resumeTableOpen: true});
+   this.setState({resumeTable: resumeInfo,resumeTableOpen: true, loading: false, loadingMessage: "Loading..."});
   }
+
 
   render() {
     const {formData} = this.state;
