@@ -358,6 +358,7 @@ class InstyBeta extends React.Component {
      this.submitDataToTron = this.submitDataToTron.bind(this);
      this.handleDialogClose = this.handleDialogClose.bind(this);
      this.tryGetResume = this.tryGetResume.bind(this);
+     this.removeResumeID = this.removeResumeID.bind(this);
   }
 
  initCallback (dropzone) {
@@ -493,15 +494,16 @@ mouseOverHandler(d, e) {
 
   async onGetResume(event) {
     console.log("checking event for onGetResume", event.target.id);
+    console.log("checking ongetresume resumeID", this.state.resumeIDArray[event.target.id]);
     const resume = await Utils.contract.getResume(this.state.resumeIDArray[event.target.id]).call();
 
     var resumeBlockchainObject = {};
 
     console.log("checking resume object", resume);
-    resumeBlockchainObject["ResumeId"] = resume["resumeID"];
+    resumeBlockchainObject["ResumeID"] = resume["resumeID"];
     resumeBlockchainObject["Job Title"] = resume["jobTitle"];
     resumeBlockchainObject["Score"] = parseInt(resume["score"]["_hex"])/100;
-    resumeBlockchainObject["Timestamp"] = timeConverter(parseInt(resume["score"]["_hex"]));
+    resumeBlockchainObject["Timestamp"] = timeConverter(parseInt(resume["timestamp"]["_hex"]));
     //console.log(resume);
     await this.setState({resumeBlockChainObject: resumeBlockchainObject});
     await this.setState({dialogOpen: true});
@@ -766,10 +768,10 @@ getColor(number){
 }
 
 sortResumes(resumes){
- var sortedResumes = resumes.sort(this.Comparator);
+
 //console.log("in sortResumes checking sorted resumes", sortedResumes);
 
-  return sortedResumes;
+  return resumes;
 }
 
 handleCollapse(event){
@@ -811,10 +813,8 @@ async submitResumeUpload(){
           //console.log("sucessfull call to /resumeupload");
          // console.log("response data for /resumeupload", response.data);
           self.setState({resumeID : response.data["Data"]});
-          const {resumeIDArray} = self.state;
 
-          resumeIDArray.push(response.data["Data"]);
-          self.setState({resumeIDArray: resumeIDArray});
+         
 
           //console.log("checking state tron", self.state.resumeID);
           self.testFrontEndInstyBeta();
@@ -861,6 +861,10 @@ async submitResumeUpload(){
         //handle success
        // console.log("here is front end insty response",response);
        //console.log("sucessfull call to /instybeta");
+        const {resumeIDArray} = self.state;
+
+          resumeIDArray.push(self.state.resumeID);
+          self.setState({resumeIDArray: resumeIDArray});
         self.setState({instyData: response.data});
         self.setState({loadingMessage: "Your resume was scored.  Now it is being processed through the blockchain."})
         
@@ -869,6 +873,7 @@ async submitResumeUpload(){
     .catch(function (response) {
         //handle error
         console.log("error on front end insty response",response);
+         //self.removeResumeID();
         self.setState({loadingMessage: 'Sorry, we are unable to process this resume. Please try again, or upload a different resume.'});
           setTimeout(
         function() {
@@ -877,6 +882,8 @@ async submitResumeUpload(){
         .bind(self),
         6000
         );
+
+         
     });
   }
 
@@ -920,7 +927,17 @@ handleDialogClose() {
 
    this.setState({resumeTable: resumeInfo,resumeTableOpen: true, loading: false, loadingMessage: "Loading..."});
   }
+removeResumeID(){
 
+  console.log("got to remove resumeID")
+  const {resumeIDArray} = this.state;
+
+  var newResumeIDArray = resumeIDArray.pop();
+
+  this.setState({resumeIDArray: newResumeIDArray});
+
+  return;
+}
 
   render() {
     const {formData} = this.state;
