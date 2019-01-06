@@ -226,6 +226,7 @@ class InstyBeta extends React.Component {
     super(props);
 
     this.state = {
+      resumeIDArray: [],
       resumeTableOpen: false,
       resumeTable: [],
        tronWeb: {
@@ -488,10 +489,19 @@ mouseOverHandler(d, e) {
     return newLangs;
   }
 
-  async onGetResume() {
-    const resume = await Utils.contract.getResume(this.state.resumeID).call();
+  async onGetResume(event) {
+    console.log("checking event for onGetResume", event.target.id);
+    const resume = await Utils.contract.getResume(this.state.resumeIDArray[event.target.id]).call();
+
+    var resumeBlockchainObject = {};
+
+    console.log("checking resume object", resume);
+    resumeBlockchainObject["ResumeId"] = resume["resumeID"];
+    resumeBlockchainObject["Job Title"] = resume["jobTitle"];
+    resumeBlockchainObject["Score"] = parseInt(resume["score"]["_hex"])/100;
+    resumeBlockchainObject["Timestamp"] = timeConverter(parseInt(resume["score"]["_hex"]));
     //console.log(resume);
-    await this.setState({resumeBlockChainObject: resume});
+    await this.setState({resumeBlockChainObject: resumeBlockchainObject});
     await this.setState({dialogOpen: true});
   }
 
@@ -571,6 +581,11 @@ onFileDrop() {
 
       else{
             this.handleResumes(serverResponse);
+             if (this.state.myDropZone){ 
+
+                 this.state.myDropZone.removeFile( this.state.myDropZone.getQueuedFiles()[0]);
+             }
+
       this.setState({loading: false});
       this.setState({resumeCheck: true});
       }
@@ -756,6 +771,11 @@ async submitResumeUpload(){
           //console.log("sucessfull call to /resumeupload");
          // console.log("response data for /resumeupload", response.data);
           self.setState({resumeID : response.data["Data"]});
+          const {resumeIDArray} = self.state;
+
+          resumeIDArray.push(response.data["Data"]);
+          self.setState({resumeIDArray: resumeIDArray});
+
           //console.log("checking state tron", self.state.resumeID);
           self.testFrontEndInstyBeta();
             }
@@ -870,69 +890,61 @@ handleDialogClose() {
       <div style={{}}>
         
          <Dialog
-          open={this.state.dialogOpen || this.state.resumeTableOpen}
-          fullWidth={true}
+          open={(!this.state.tronWeb.installed || !this.state.tronWeb.loggedIn) || (this.state.dialogOpen || this.state.resumeTableOpen)}
+          fullWidth={false}
           maxWidth="lg"
-          
+           disableBackdropClick={(!this.state.tronWeb.installed || !this.state.tronWeb.loggedIn)}
+        disableEscapeKeyDown={(!this.state.tronWeb.installed || !this.state.tronWeb.loggedIn)}
           onClose={this.handleDialogClose}
           aria-labelledby="form-dialog-title"
         >
         
           
           <DialogContent>
-           {this.state.resumeTableOpen? (
+           {
+            (!this.state.tronWeb.installed || !this.state.tronWeb.loggedIn) ? (
+            this.state.tronWeb.installed? (<TronLinkGuide installed />) : (<TronLinkGuide />)
+          )
+
+
+
+            : this.state.resumeTableOpen? 
+
+            (
 
             <Table style={styles.resumeTable}>
-        <TableHead>
-          <TableRow>
-            <TableCell style={styles.resumeTable}>ResumeID</TableCell>
-            <TableCell style={styles.resumeTable} >Job Title</TableCell>
-            <TableCell style={styles.resumeTable} >Score</TableCell>
-            <TableCell style={styles.resumeTable} >Timestamp</TableCell>
+              <TableHead>
+                <TableRow>
+                  <TableCell style={styles.resumeTable}>ResumeID</TableCell>
+                  <TableCell style={styles.resumeTable} >Job Title</TableCell>
+                  <TableCell style={styles.resumeTable} >Score</TableCell>
+                  <TableCell style={styles.resumeTable} >Timestamp</TableCell>
             
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {this.state.resumeTable.length > 0 ? this.state.resumeTable.map( (row,index) => {
-           
-           
-           
-            return (
-              <TableRow key={index}>
-                <TableCell component="th" style={styles.resumeTableCellFirst} scope="row">
-                  {row[0]}
-                </TableCell>
-                <TableCell style={styles.resumeTableCell} >{row[1]}</TableCell>
-                <TableCell style={styles.resumeTableCell}>{parseInt(row[2]["_hex"])/100}</TableCell>
-                <TableCell style={styles.resumeTableCell} >{ timeConverter(parseInt(row[3]["_hex"]))}</TableCell>
-                
-                
-              </TableRow>
-            );
-          }): (<div></div>)}
-        </TableBody>
-      </Table>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                  {this.state.resumeTable.length > 0 ? this.state.resumeTable.map( (row,index) => {
+    
+                      return (
+                <TableRow key={index}>
+                  <TableCell component="th" style={styles.resumeTableCellFirst} scope="row">
+                    {row[0]}
+                  </TableCell>
+                  <TableCell style={styles.resumeTableCell} >{row[1]}</TableCell>
+                  <TableCell style={styles.resumeTableCell}>{parseInt(row[2]["_hex"])/100}</TableCell>
+                  <TableCell style={styles.resumeTableCell} >{ timeConverter(parseInt(row[3]["_hex"]))}</TableCell>
+                </TableRow>
+                      );
+                  }): (<div></div>)}
+                </TableBody>
+            </Table>
 
-            )   : (<ReactJson src={this.state.resumeBlockChainObject} />)}
+            )   : (<ReactJson displayDataTypes={false} src={this.state.resumeBlockChainObject} />)}
           </DialogContent>
        
         </Dialog>
 
-        <Dialog
-        disableBackdropClick={true}
-        disableEscapeKeyDown={true}
-          open={!this.state.tronWeb.installed || !this.state.tronWeb.loggedIn}
-          
-          aria-labelledby="form-dialog-title"
-        >
         
-          
-          <DialogContent>{
-            this.state.tronWeb.installed? (<TronLinkGuide installed />) : (<TronLinkGuide />)
-          }
-          </DialogContent>
-       
-        </Dialog>
 
 
         <MuiThemeProvider muiTheme={muiTheme}>
@@ -1054,9 +1066,9 @@ handleDialogClose() {
                     onClick={this.getInfo}
                     label="Submit"
                     type="submit"
-                    Rounded={true}
+                    rounded="true"
                     buttonStyle={styles.roundedButton}
-                    labelColor="white"
+                    labelColor="#fff"
                     style={styles.buttonDiv}
                     overlayStyle={styles.roundedButtonOverlay}
                     disableTouchRipple={true}
@@ -1093,7 +1105,7 @@ handleDialogClose() {
 
                     )
                    .map((item, index) => (
-                  <div className="row" style={{margin:"15px"}} className="score-row">
+                  <div className="row" style={{margin:"15px"}} key={index} className="score-row">
                     
                       <div style={{marginBottom:"2%"}} className="col-md-10">
                        <label style={labelStyle}> {item[1]["total"]} / 100</label>
@@ -1123,7 +1135,7 @@ handleDialogClose() {
 
                              <a> <img id={index}
                             onClick={(event) => {event.preventDefault()
-                                                                this.onGetResume() }  }
+                                                                this.onGetResume(event) }  }
                             style={styles.resumeBlockchainButton} className="view-score-breakdown-button" src={viewButtonResumeBlockchain}/> </a>
                           </span>
                             <Collapse isOpen={this.state.collapseArrays[index]}>

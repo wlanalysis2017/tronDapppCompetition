@@ -603,7 +603,7 @@ class DataVisualization extends Component {
                 <XAxis dataKey="name" >
                 
                 </XAxis>
-               <YAxis  label={{ value: 'Percentage', angle: -90, offset: 2, position: 'topLeft' }}/>
+               <YAxis  label={{ value: 'Percentage', angle: -90, offset: 2 }}/>
                 <Tooltip />
                 
             <Bar dataKey="dynamic" fill="#09D4C1" />
