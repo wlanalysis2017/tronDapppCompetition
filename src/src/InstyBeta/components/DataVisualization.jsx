@@ -477,7 +477,7 @@ class DataVisualization extends Component {
       
 
    
-     <div className="row" style={{marginRight: "40px"}}>
+     <div className="row" >
 
      
 
@@ -529,7 +529,7 @@ class DataVisualization extends Component {
             </Section>
         </div>
 
-        <div className="col-md-2" style={{marginTop:"2.5%", minWidth: "150px"}}> 
+        <div className="col-md-2" style={{marginTop:"7.5%", minWidth: "150px"}}> 
            <Legend
           
             data={this.state.data}
@@ -542,7 +542,7 @@ class DataVisualization extends Component {
    
          
    
-        <div className="col-md-6 score-analysis-container"  >
+        <div className="col-md-6 score-analysis-container" style={{marginRight: "0px !important"}} >
          <Section
                 
                 heading=" "
@@ -573,7 +573,7 @@ class DataVisualization extends Component {
                         </div>
 
                         
-                      <div className="col-md-1" style={{marginLeft: "-3px"}}>
+                      <div className="col-md-1" >
                          <h4 style={chartLegendStaticStyle}> Static </h4>
                       </div>
 
