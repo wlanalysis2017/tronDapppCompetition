@@ -366,7 +366,7 @@ class InstyBeta extends React.Component {
 }
 
 async componentDidMount() {
-   
+   console.log("component did mount");
     await new Promise(resolve => {
         const tronWebState = {
             installed: !!window.tronWeb,
@@ -947,8 +947,8 @@ removeResumeID(){
 
     return (
       <div style={{}}>
-        
-         <Dialog
+        { (!this.state.tronWeb.installed || !this.state.tronWeb.loggedIn) || (this.state.dialogOpen || this.state.resumeTableOpen)?
+         (<Dialog
           open={(!this.state.tronWeb.installed || !this.state.tronWeb.loggedIn) || (this.state.dialogOpen || this.state.resumeTableOpen)}
           fullWidth={false}
           maxWidth="lg"
@@ -1001,10 +1001,7 @@ removeResumeID(){
             )   : (<ReactJson displayDataTypes={false} src={this.state.resumeBlockChainObject} />)}
           </DialogContent>
        
-        </Dialog>
-
-        
-
+          </Dialog>) : <div> </div>}
 
         <MuiThemeProvider muiTheme={muiTheme}>
         <Loadable
