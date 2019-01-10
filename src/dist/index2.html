@@ -67,20 +67,60 @@
     }
 
     .filepicker.dropzone.dz-clickable {
-     text-align: center;
-    padding: 5px;
-    background-color: rgba(243, 243, 243, 0.4) !important;
-    border-radius: 10px;
-    min-height: 160px !important;
-    
-
-     border: 2px #C7C7C7;
+      background-color: transparent !important;
+      border: 1px solid #FFAA3B;
+     border-radius: 25px;
+     padding: 0px 0px !important;
     }
+    .filepicker-file-icon {
+    position: relative;
+    display: inline-block;
+    margin: 2.5em 0 .1em 1.9em !important;
+    padding-left: 45px;
+    color: black;
 
-    .dz-default.dz-message {
-      color: #fff;
-      font-size: 16px;
-      font-weight: 700;
+     width:250px ; /*width of your image*/
+   height:70px; /*height of your image*/
+   background-image:url('dropzone.png');
+   background-repeat: no-repeat;
+   margin:0; /* If you want no margin */
+   padding:0; /*if your want to padding */
+}
+.filepicker-file-icon::before {
+    position: absolute;
+    top: -7px;
+    left: 0;
+    width: 29px;
+    height: 34px;
+    content: '';
+    border: none !important;
+    border-radius: none !important;
+}
+.filepicker-file-icon::after {
+    font-size: 11px;
+    line-height: 1.3;
+    position: absolute;
+    top: 9px;
+    left: -4px;
+    padding: 0 2px;
+    content: '' !important;
+    content: none !important;
+    text-align: right;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: transparent !important;
+    background-color: transparent !important;
+}
+.dropzone .dz-message {
+    font-family: 'Avenir' !important;
+    text-align: center !important;
+    margin: -1em  0px 4em 0px !important;
+}
+
+   .dz-default.dz-message {
+      color: #FFFFFF;
+      font-size: 12px;
+      font-weight: 100;
     }
     .dz-progress{
       background: none !important;
@@ -103,6 +143,9 @@
     }
     .react-sweet-progress-symbol{
       color: #fff !important;
+    }
+    .text-field{
+      height: 52px !important;
     }
     </style>
 
