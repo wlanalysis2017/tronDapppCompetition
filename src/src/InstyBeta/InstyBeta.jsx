@@ -66,7 +66,17 @@ const dottedContainer = {
   position: "relative",
   border: "1px solid #FFAA3B",
   borderRadius: "25px",
-  padding: "40px 40px 40px",
+  padding: "50px",
+  margin: "10px 0",
+  overflow: "hidden",
+  color: "#fff !important",
+
+};
+const dottedContainer1 = {
+  position: "relative",
+  border: "1px solid #FFAA3B",
+  borderRadius: "25px",
+  padding: "50px",
   margin: "10px 0",
   overflow: "hidden",
   color: "#fff !important",
@@ -82,19 +92,22 @@ const labelStyle = {
 };
 
 const inputStyle = {
-  backgroundColor: "rgba(243,243,243,0.4)",
+  backgroundColor: "rgba(1,1,1,0.1) !important",
   borderRadius: "25px",
   padding: "0 10px",
-  color: "#fff !important" ,
+  color: "#000" ,
+  zIndex: "200",
+  marginBottom: "10px",
 
   // textAlign: "right"
 };
 
 
 const hintStyle = {
+  zIndex: "200",
 left: "10px",
-marginBottom:"50px",
-color:"#fff",
+marginBottom:"10px",
+color:"#000",
 };
 
 const underlineStyle = {
@@ -257,7 +270,7 @@ class InstyBeta extends React.Component {
     };
         
         this.componentConfig = {
-      iconFiletypes: [".pdf", ".doc", ".txt"],
+      iconFiletypes: [".pdf"],
       showFiletypeIcon: true,
       postUrl: '/FileUploadHandler'
     };
@@ -272,7 +285,7 @@ class InstyBeta extends React.Component {
         name: "testfile"
       },
       maxFiles: 1,
-      dictDefaultMessage: "Drag and drop resume to upload",
+      dictDefaultMessage: "PDF/Doc/Docx/Txt",
       acceptedFiles: ".pdf,.doc,.docx,.txt"
     };
     this.resumeIDStored = React.createRef();
@@ -1065,23 +1078,24 @@ removeResumeID(){
               <Section
                 containerSize={1}
                 heading="Step 1."
+                style={{marginBottom: "20px"}}
                 subHeading="Provide Job Title (at least 10 characters)." >
                     <div style={dottedContainer} className="col-12 scores-dotted-container">
                       <label style={labelStyle}>Job Title</label>
                       <TextValidator
-                          multiLine={true}
-                          rows={4}
-                          rowsMax={15}
+                         autoComplete="off"
+                          rows={2}
+                          rowsMax={2}
                           name="JobDescription"
                           value={formData.JobDescription}
                           onChange={this.handleChange}
                           fullWidth={true}
                           className="text-field"
                           inputStyle={inputStyle}
-                          hintStyle={hintStyle}
+                          autoFocus={true}
                           underlineFocusStyle={underlineStyle}
                           underlineStyle={underlineStyle}
-                          hintText="Please Enter Job Title Here..."
+                          
                           style={{
                             fontSize: "14px",
                             color:"#fff",
