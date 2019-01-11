@@ -12,45 +12,48 @@ import FaCircle from "react-icons/lib/fa/circle";
 const linkedInIcon ={
 
   };
+  const negativeMargin = {
+    marginTop: "-4px",
+  };
 const chartHeadingStyle = {
   fontSize: "14px",
-  fontWeight: "800",
-  color: "#009dd6",
+  fontWeight: "400",
+  color: "#FFFFFF",
   marginBottom: "20px",
   marginTop: "10px",
 };
 const chartHeadingStyleDistribution = {
   fontSize: "14px",
-  fontWeight: "800",
-  color: "#009dd6",
-  marginBottom: "20px",
-  marginTop: "10px",
-  marginLeft: "10px",
+  fontWeight: "400",
+  color: "#FFFFFF",
+  marginBottom: "25px",
+  marginTop: "0px",
+  marginLeft: "60px",
 };
 
 const chartLegendStyle = {
 
   marginTop: "12px",
   fontSize: "10px",
-  fontWeight: "400",
+  fontWeight: "100",
   color: "#009dd6",
 
 };
 const chartLegendStaticStyle = {
 
   marginLeft: "1px",
-  marginTop: "15px",
+  marginTop: "17px",
   fontSize: "14px",
-  fontWeight: "400",
-  color: "#56A1FD",
+  fontWeight: "100",
+  color: "#FFFFFF",
 
 };
 const chartLegendDynamicStyle = {
   marginLeft: "1px",
-  marginTop: "15px",
+  marginTop: "17px",
   fontSize: "14px",
-  fontWeight: "400",
-  color: "#09D4C1",
+  fontWeight: "100",
+  color: "#FFFFFF",
 
 };
 const toolTipStyles = {
@@ -86,11 +89,10 @@ const subHeadingStyle = {
 
 const dottedContainer = {
   
-  border: "1px solid #009dd6",
-  borderRadius: "10px",
-  padding: "10px 10px 30px",
+
+  padding: "10px 0px 30px",
   margin: "10px 0",
-  overflow: "scroll",
+ 
 };
 const customStyle = {
     '.legend': {
@@ -136,11 +138,11 @@ const customStyle = {
   };
   const config = [
     
-    {color: '#00ADF3'},
-    {color: '#D0021B'},
-     {color: '#F5A623'},
-      {color: '#09D4C1'},
-       {color: '#2158D3'},
+    {color: '#13326B'},
+    {color: '#9B9B9B'},
+     {color: '#C62634'},
+      {color: '#623999'},
+       {color: '#BF2152'},
   ];
 
   const chartOptions = {
@@ -245,7 +247,7 @@ class DataVisualization extends Component {
                           else{ 
                             console.log("got to Github");
 
-                            returnData.push({ key: data[1][key] + '%', value: data[1][key], color: '#D0021B', name:'Github' })
+                            returnData.push({ key: data[1][key] + '%', value: data[1][key], color: '#9B9B9B', name:'Github' })
                           }
                         }
                         else if (key == "dist_educ"){
@@ -256,7 +258,7 @@ class DataVisualization extends Component {
                           }
                           else{ 
                             console.log("got to Education");
-                            returnData.push({ key: data[1][key] + '%', value: data[1][key], color: '#00ADF3', name:'Education' })
+                            returnData.push({ key: data[1][key] + '%', value: data[1][key], color: '#13326B', name:'Education' })
                           }
                         }
                         else if (key == "dist_sim"){
@@ -268,7 +270,7 @@ class DataVisualization extends Component {
                           else{ 
                             console.log("got to Similarity");
 
-                            returnData.push({ key: data[1][key] + '%', value: data[1][key], color: '#F5A623', name:'Similarity To JD' })
+                            returnData.push({ key: data[1][key] + '%', value: data[1][key], color: '#C62634', name:'Similarity To JD' })
                           }
                         }
                         else if (key == "dist_skill"){
@@ -280,7 +282,7 @@ class DataVisualization extends Component {
                           else{ 
                             console.log("got to Skills");
 
-                            returnData.push({ key: data[1][key] + '%', value: data[1][key], color: '#09D4C1', name:'Skill'})
+                            returnData.push({ key: data[1][key] + '%', value: data[1][key], color: '#623999', name:'Skill'})
                           }
                         }
                         else if (key == "dist_work"){
@@ -291,7 +293,7 @@ class DataVisualization extends Component {
                           }
                           else{ 
                             console.log("got to Work Experience");
-                            returnData.push({ key: data[1][key] + '%', value: data[1][key], color: '#2158D3', name:'Work Experience' })
+                            returnData.push({ key: data[1][key] + '%', value: data[1][key], color: '#BF2152', name:'Work Experience' })
                           }
                         }
 
@@ -467,13 +469,7 @@ class DataVisualization extends Component {
       
       <div className="data-visualize-container" style={dottedContainer}>
 
-       <div className="row">
       
-        <div className="col-md-7"> 
-          {tooltip}
-          </div>
-       
-      </div>
       
 
    
@@ -493,7 +489,7 @@ class DataVisualization extends Component {
       
         
                 
-                    <h4 style={chartHeadingStyleDistribution} className="chart-graph-label">  Distribution of Score </h4>
+                    <h4 style={chartHeadingStyleDistribution} className="chart-graph-label">  Distribution of the Total Score </h4>
                  
              </div>
 
@@ -512,7 +508,7 @@ class DataVisualization extends Component {
                                       },
                                       '.chart_text': {
                                         color: 'white',
-                                        fontFamily: 'serif',
+                                        fontFamily: 'Roboto, sans-serif',
                                         fontSize: '1.25em',
                                         fill: '#333'
                                       },
@@ -562,33 +558,33 @@ class DataVisualization extends Component {
 
 
                
-                      <div className="col-md-2">
+                      <div className="col-md-2" style={negativeMargin}>
                           <IconButton  tooltipPosition="top-left"  tooltipStyles={{fontSize:"14px",}} tooltip="Resume score based purely on resume content.">
                                 <FaQuestionCircle
                               style={linkedInIcon}
-                              color="#56A1FD"
+                              color="#C62634"
                               size={20}
                             />
                           </IconButton>
                         </div>
 
                         
-                      <div className="col-md-1" >
+                      <div className="col-md-1"  style={negativeMargin}>
                          <h4 style={chartLegendStaticStyle}> Static </h4>
                       </div>
 
-                       <div className="col-md-2">
+                       <div className="col-md-2" style={negativeMargin}>
                           <IconButton  tooltipPosition="top-left"  tooltipStyles={{fontSize:"14px",}} tooltip="Resume score based on Job Description.">
                                 <FaQuestionCircle
                               style={linkedInIcon}
-                              color="#09D4C1"
+                              color="#FFFFFF"
                               size={20}
                             />
                           </IconButton>
                         </div>
 
                       
-                      <div className="col-md-1" style={{marginLeft: "-3px"}}>
+                      <div className="col-md-1" style={{marginLeft: "-3px", marginTop: "-4px"}}>
                          <h4 style={chartLegendDynamicStyle}> Dynamic </h4>
                       </div>
                  
@@ -599,15 +595,15 @@ class DataVisualization extends Component {
         <ResponsiveContainer width="95%" height={250}>
 
             <BarChart width={500} height={250} data={this.state.barData}>
-                <CartesianGrid strokeDasharray="3 3" />
+                <CartesianGrid vertical={false} />
                 <XAxis dataKey="name" >
                 
                 </XAxis>
-               <YAxis  label={{ value: 'Percentage', angle: -90, offset: 2 }}/>
-                <Tooltip />
+               <YAxis  axisLine={false} label={{ value: 'Percentage', angle: -90, offset: 2 }}/>
+                <Tooltip labelStyle={{color: "white", }} contentStyle={{backgroundColor: "rgba(0,0,0,.85)"}}/>
                 
-            <Bar dataKey="dynamic" fill="#09D4C1" />
-            <Bar dataKey="static" fill="#56A1FD" />
+            <Bar dataKey="dynamic" fill="#FFFFFF" />
+            <Bar dataKey="static" fill="#C62634" />
                
               </BarChart>
        </ResponsiveContainer>

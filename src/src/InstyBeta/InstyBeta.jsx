@@ -25,11 +25,13 @@ import RaisedButton from "material-ui/RaisedButton";
 
 // Font
 import Paper from "material-ui/Paper";
-import Background from "../_constants/images/TRONBG.png";
-import tronLOGO from "../_constants/images/tronLogo.png";
-import viewButton from "../_constants/images/viewButton.png";
-import viewButtonResumeBlockchain from "../_constants/images/viewresumeblockchain.png";
-import viewButtonClosed from "../_constants/images/viewButtonClosed.png";
+
+import buttonBackground from "../_constants/images/buttonBackground.png";
+import tronLOGO from "../_constants/images/tronLogo2.png";
+import viewButton from "../_constants/images/viewButton2.png";
+import viewButtonResumeBlockchain from "../_constants/images/viewresumeblockchain2.png";
+import viewButtonClosed from "../_constants/images/viewButtonClosed2.png";
+import viewBlockchainSubmissionsButton from "../_constants/images/viewBlockchainSubmissions.png";
 import Loadable from 'react-loading-overlay';
 import {
   TextValidator,
@@ -64,9 +66,21 @@ const muiTheme = getMuiTheme({
 
 const dottedContainer = {
   position: "relative",
-  border: "1px solid #FFAA3B",
+  border: "1px solid #C62634",
   borderRadius: "25px",
   padding: "50px",
+
+  margin: "10px 0",
+  overflow: "hidden",
+  color: "#fff !important",
+
+};
+const dottedContainerStep3 = {
+  position: "relative",
+  border: "1px solid #C62634",
+  borderRadius: "25px",
+  padding: "25px 0px",
+
   margin: "10px 0",
   overflow: "hidden",
   color: "#fff !important",
@@ -84,16 +98,16 @@ const dottedContainer1 = {
 };
 
 const labelStyle = {
-  color: "#00ADF3",
+  color: "#FFFFFF",
   position: "absolute",
-  top: "-30px",
+  top: "-40px",
   fontSize: "18px",
   marginBottom: "5px",
 };
 
 const inputStyle = {
   backgroundColor: "rgba(1,1,1,0.1) !important",
-  borderRadius: "25px",
+  borderRadius: "10px",
   padding: "0 10px",
   color: "#000" ,
   zIndex: "200",
@@ -127,30 +141,30 @@ const styles = {
 
 resumeTableCell:{
   fontSize: "24px",
-  color: "#666666",
+  color: "#FFFFFF",
 },
 resumeTableCellSmall:{
   fontSize: "16px",
-  color: "#666666",
+  color: "#FFFFFF",
 },
 resumeTableCellFirst:{
   fontSize: "24px",
-  color: "#666666",
+  color: "#FFFFFF",
 },
   resumeTable:{
-    fontSize: "24px",
-    color: "#00ADF3",
+    fontSize: "48px",
+    color: "#C62634",
   },
   paperStyle: {
     position: "relative",
     marginTop: "10%",
     width: "100%",
     display: "inline-block",
-    backgroundColor: "rgba(0,0,0,.85)",
+    backgroundColor: "rgba(0,0,0,.26)",
     opacity: "75%",
     borderStyle: "solid",
-    borderColor: "white",
-    borderWidth: "2px"
+    borderColor: "#C62634",
+    borderWidth: "1px"
   },
   roundedButton: {
      margin: "0 auto",
@@ -158,17 +172,21 @@ resumeTableCellFirst:{
    
     position: "relative",
     height: "100%",
-    bordeRadius: "10px",
+    bordeRadius: "25px ",
     padding: "10px 50px",
     boxShadow: "0px",
-    backgroundColor: "#79C239",
+    backgroundColor: "#C62634",
   },
   buttonDiv:{
     left: "-25px",
     color: "white",
+    backgroundColor: "#C62634",
+    borderRadius: "25px",
+
   },
   roundedButton2: {
-    marginLeft: "25%",
+    marginLeft: "20%",
+    marginRight: "25px",
     minWidth: "50px",
     position: "relative",
   },
@@ -178,13 +196,27 @@ resumeTableCellFirst:{
     position: "relative",
    
   },
+  resumeBlockchainButtonOpen: {
+    marginLeft: "25px",
+    minWidth: "50px",
+    position: "relative",
+    marginBottom: "13px",
+   
+  },
   roundedButtonOverlay: {
     
   },
   headingStyle: {
     fontSize: "24px",
-    color: "#00ADF3",
+    color: "#FFFFFF",
     fontWeight: "500",
+    textAlign: "center",
+  },
+   subheadingStyle: {
+    margin: "10px 0px",
+    fontSize: "22px",
+    color: "#FFFFFF",
+    fontWeight: "200",
     textAlign: "center",
   },
   paragraphStyle: {
@@ -535,7 +567,13 @@ async tryGetResume(resumeID,repetitions){
       .then(res => {
         Swal({
           title: 'Resume Processing Succeeded',
-          type: 'success'
+          type: 'success',
+          background: "rgb(198,38,52,.65)",
+           confirmButtonColor: '#C62634',
+         
+
+  backdrop: "rgba(0,0,123,0.4)center left no-repeat",
+  
       });
       console.log("async call went through", index);
       console.log("checking result", res);
@@ -962,6 +1000,9 @@ removeResumeID(){
       <div style={{}}>
         { (!this.state.tronWeb.installed || !this.state.tronWeb.loggedIn) || (this.state.dialogOpen || this.state.resumeTableOpen)?
          (<Dialog
+          PaperProps={{
+           style: { backgroundColor: 'rgba(0,0,0,.75)',boxShadow: 'none',maxHeight: '700px'},
+            }}
           open={(!this.state.tronWeb.installed || !this.state.tronWeb.loggedIn) || (this.state.dialogOpen || this.state.resumeTableOpen)}
           fullWidth={false}
           maxWidth="lg"
@@ -972,7 +1013,7 @@ removeResumeID(){
         >
         
           
-          <DialogContent>
+          <DialogContent >
            {
             (!this.state.tronWeb.installed || !this.state.tronWeb.loggedIn) ? (
             this.state.tronWeb.installed? (<TronLinkGuide installed />) : (<TronLinkGuide />)
@@ -1011,7 +1052,7 @@ removeResumeID(){
                 </TableBody>
             </Table>
 
-            )   : (<ReactJson displayDataTypes={false} src={this.state.resumeBlockChainObject} />)}
+            )   : (<ReactJson displayDataTypes={false}  theme="tomorrow" src={this.state.resumeBlockChainObject} />)}
           </DialogContent>
        
           </Dialog>) : <div> </div>}
@@ -1034,8 +1075,8 @@ removeResumeID(){
           <Section
             containerSize={1}
             style={{
-              background: "url(" + Background + ") repeat-y",
-              backgroundSize: "fixed",
+              background: "linear-gradient(180deg, rgba(64,8,5,1) 0%, rgba(17,2,10,1) 100%, rgba(17,2,10,1) 100%)",
+             
               paddingBottom: "5%"
             }}
           >
@@ -1052,26 +1093,65 @@ removeResumeID(){
                 containerSize={1}
                
                 style={{marginBottom: "10px"}}>
-                <div className="row">
-                  <div className="col-md-4" style={{marginLeft: "20%"}}>
-                  <img src={tronLOGO} />
-                  </div>
-                  </div> 
-
-                   <div className="col-md-6" style={{width: "75%", marginLeft: "12.5%"}}>
-
-                  <h6 style={styles.headingStyle}> InstyMatch:  </h6>
                 
-                  <h6 style={styles.headingStyle}> Simple, impartial, decentralized and lightning-fast. </h6>
+                <div className="row" style={{marginLeft: "25%", marginTop: "25px", marginBottom: "25px"}}>
+                  <div className="col-md-4" >
+                    <img src={tronLOGO} />
+                  </div>
+                </div> 
 
-                  <p style={{marginTop: "50px", textAlign: "center", fontSize: "16px", color: "#fff"}}> InstyMatch is a Tron Dapp that finds a correlation score between a job description and a resume. </p>
-                  <p style={styles.paragraphStyle}> If you're a candidate, rate your resume against the competition of candidates in the blockchain.  If you're a recruiter or employer, upload resumes to compare the candidates for a position you need to fill, and access previous resume submissions in the blockchain.</p>
-            
-                  <p style={styles.paragraphStyle}> InstyMatch is limited to 10 scoring requests per day.</p>
-                  <a href="https://www.myjobtank.com" target="_blank"> <p style={styles.paragraphStyleUnderlined}> Find out more here!</p> </a>
-                  <a onClick={(event) => {event.preventDefault()
-                                            this.onGetResumes() }  } target="_blank"> <p style={styles.paragraphStyleUnderlinedBig}> View blockchain submissions</p> </a>
-                   </div> 
+                  <div className="col-md-6" style={{ marginLeft: "25%"}}>
+
+                        <h6 style={styles.headingStyle}> InstyMatch  </h6>
+                      
+                        <h6 style={styles.subheadingStyle}> Simple, impartial, decentralized and lightning-fast. </h6>
+
+                        <p style={{marginTop: "25px", textAlign: "center", fontSize: "16px", color: "#fff", fontWeight: "100"}}> InstyMatch is a Tron Dapp that finds a correlation score between a job description and a resume. </p>
+                        <p style={{fontSize: "16px", marginTop: "20px",textAlign: "center",color: "#fff",fontWeight: "100"}}> If you're a candidate, rate your resume against the competition of candidates in the blockchain.  If you're a recruiter or employer, upload resumes to compare the candidates for a position you need to fill, and access previous resume submissions in the blockchain.</p>
+                  
+                        <p style={{ fontSize: "16px",marginTop: "20px", textAlign: "center",color: "#fff",fontWeight: "100"}}> InstyMatch is limited to 10 scoring requests per day.</p>
+                       
+
+                        
+
+
+
+                 
+                  </div> 
+                 <div className="col-md-10" style={{ marginLeft: "10%", marginTop: "25px"}}>
+                     <Section
+                       containerSize={1}
+                      style={{
+                      background: "url(" + buttonBackground + ") repeat-x",
+                      backgroundSize: "850px 100px",
+                      padding: "0px 0px"
+                      }} >  
+
+                        <RaisedButton
+                        disabledBackgroundColor="rgba(0,0,0,0);"
+                        
+                        label="Find Out More Here!"
+                        href="https://www.myjobtank.com"
+                        rounded="true"
+                        buttonStyle={{margin: "0 auto", color: "white", position: "relative",height: "100%",bordeRadius: "25px ", padding: "10px 30px", boxShadow: "0px",backgroundColor: "#C62634",}}
+                        labelColor="#fff"
+                        style={{marginLeft:"32.5%", marginTop: "25px",marginBottom: "25px",color: "white",backgroundColor: "#C62634",borderRadius: "25px",}}
+                        overlayStyle={styles.roundedButtonOverlay}
+                        disableTouchRipple={true}
+                      />
+                    </Section>
+                  </div>
+                  <div className="col-md-6" style={{ marginLeft: "25%", marginTop: "25px"}}>
+                     <a style={{marginLeft: "20%", marginTop: "25px"}} 
+                     onClick={(event) => {event.preventDefault()
+                        this.onGetResumes() }  } target="_blank"> 
+                        <img 
+                             
+                          src={viewBlockchainSubmissionsButton}/>
+                      </a>
+                  </div>
+
+                 
                 
               </Section> 
               
@@ -1148,22 +1228,23 @@ removeResumeID(){
               { this.state.resumeCheck &&
 
                 <div>
-                 <Section
-                
-                containerSize={1}
-                heading="Step 3."
-                subHeading="Here are the results of your resume's..."
-                score={true}
-                >
-                </Section>
+
                  <Section
                  style={{ marginBottom: "5%",}}
-                
-                heading=" "
-                subHeading=" "
+                containerSize={1}
+                 heading="Step 3."
+                subHeading="Here are the results of your resume's..."
+                score={true}
+                headingStyle={{
+                    fontSize: "20px",
+                    fontWeight: "400",
+                    color: "#FFFFFF",
+                    marginBottom: "30px",
+                    
+                  }}
                
                 >
-                <div  style={dottedContainer} className="col-md-12 data-visualize-container ">
+                <div  style={dottedContainerStep3} className="col-md-12 data-visualize-container ">
                   { 
                    this.sortResumes(
 
@@ -1175,38 +1256,25 @@ removeResumeID(){
 
                     )
                    .map((item, index) => (
-                  <div className="row" style={{margin:"15px"}} key={index} className="score-row">
+                  <div style={{margin:"40px 15px"}} key={index} className="score-row row">
                     
                       <div style={{marginBottom:"2%"}} className="col-md-10">
                        <label style={labelStyle}> {item[1]["total"]} / 100</label>
                      <Progress percent={item[1]["total"] } style={{overflowWrap: "break-word",}} status="success"  theme={{success: {symbol: item[0], color: this.getColor(item[1]["total"])}}}/>
                       </div>
-                      <div className="col-md-1 close-button-insty" style={{marginBottom:"25px !important", marginLeft: "25px", marginTop: "5px"}}>
-                      
-                        <IconButton name={item[0]}   onClick={this.removedFileCallback}  >
-                          <FaTimesCircle
-                            onClick={this.removedFileCallback}
-                            name={item[0]}
-                            style={styles.linkedInIcon}
-                            color="red"
-                            size={30} >
-                           
-                          </FaTimesCircle>
-                  
-                         </IconButton>
-
-                       </div>
-                      <div style={{marginBottom:"1.5%"}} className="col-md-12 view-score-breakdown">
+                     
+                      <div style={{ marginTop: "1.5%"}} className="col-md-12 view-score-breakdown">
                           <span>
-                             <a> <img id={index}
+                              <a style={styles.roundedButton2}> <img id={index}
                             onClick={this.handleCollapse}
-                            style={styles.roundedButton2} className="view-score-breakdown-button" src={this.state.collapseArrays[index]?viewButton:viewButtonClosed}/> </a>
+                             className="view-score-breakdown-button" src={this.state.collapseArrays[index]?viewButton:viewButtonClosed}/> </a> 
 
 
-                             <a> <img id={index}
+                             <a style={this.state.collapseArrays[index]?styles.resumeBlockchainButtonOpen:styles.resumeBlockchainButton }> <img id={index}
                             onClick={(event) => {event.preventDefault()
                                                                 this.onGetResume(event) }  }
-                            style={styles.resumeBlockchainButton} className="view-score-breakdown-button" src={viewButtonResumeBlockchain}/> </a>
+                                                                style={this.state.collapseArrays[index]?styles.resumeBlockchainButtonOpen:styles.resumeBlockchainButton }
+                                                                 className="view-score-breakdown-button" src={viewButtonResumeBlockchain}/>   </a>
                           </span>
                             <Collapse isOpen={this.state.collapseArrays[index]}>
                                

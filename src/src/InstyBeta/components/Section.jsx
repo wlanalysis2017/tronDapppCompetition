@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import scoreDistribution from "../../_constants/images/score-distribution.png";
+import scoreDistribution from "../../_constants/images/score-distribution2.png";
 
 const containerStyle = {
   maxWidth: "100%",
@@ -7,18 +7,18 @@ const containerStyle = {
   zIndex: "20"
 };
 const containerStyle2 = {
-  maxWidth: "85%",
+  maxWidth: "95%",
   position: "relative",
   zIndex: "20"
 };
 
 const containerStyle3 = {
-  maxWidth: "85%",
+  maxWidth: "95%",
   position: "relative",
   zIndex: "20"
 };
 const containerStyle4 = {
-  maxWidth: "65%",
+  maxWidth: "75%",
   position: "relative",
   zIndex: "20"
 };
@@ -26,7 +26,7 @@ const containerStyle4 = {
 const headingStyle = {
   fontSize: "20px",
   fontWeight: "400",
-  color: "#00ADF3",
+  color: "#FFFFFF",
   marginBottom: "30px"
 };
 const subHeadingStyle = {
@@ -34,7 +34,7 @@ const subHeadingStyle = {
   marginLeft:"10px",
   fontSize: "14px",
   fontWeight: "400",
-  color: "#00ADF3",
+  color: "#FFFFFF",
   marginBottom: "30px"
 };
 
@@ -62,7 +62,7 @@ class Section extends Component {
         >
           {this.props.heading && this.props.subHeading ? (
             <span>
-              <h1 style={headingStyle}>{this.props.heading} 
+              <h1 style={this.props.headingStyle ? this.props.headingStyle : headingStyle}>{this.props.heading} 
 
                 <span style={this.props.subHeadingStyle?this.props.subHeadingStyle:subHeadingStyle}>
                     {this.props.subHeading}
@@ -70,7 +70,7 @@ class Section extends Component {
                       {this.props.score ? (
                        <img 
                       
-                      style={{width: "450px",margin:"2.5%", height: "auto"}}
+                      style={{width: "450px",margin:"2.5% 2.5% 2.5% 15%", height: "auto"}}
                        src={scoreDistribution}
                        className="score-range-image"/>
                     
