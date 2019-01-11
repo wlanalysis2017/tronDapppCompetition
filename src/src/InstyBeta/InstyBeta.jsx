@@ -54,8 +54,9 @@ import TableRow from '@material-ui/core/TableRow';
 import Drawer from '@material-ui/core/Drawer';
 const FOUNDATION_ADDRESS = 'TWiWt5SEDzaEqS6kE5gandWMNfxR2B5xzg';
 ////////////////////////////////////////////////////////////////////////////////////
-const contractAddress = 'THJKK4NUXqkdriKxef6xkUtp4eyQc258QP';   /// testnet
+const contractAddress = 'TY4q76Ex7QQ3W6yZ5hGs5mugwn5dy4iJPp';   /// testnet
 //const contractAddress = 'TRQNHzA8tTPVmrQsiZXbxFt7rfLdYsgt1F';   /// mainnet
+//THJKK4NUXqkdriKxef6xkUtp4eyQc258QP
 
 // Theme
 const muiTheme = getMuiTheme({
@@ -282,8 +283,8 @@ class InstyBeta extends React.Component {
     super(props);
 
     this.state = {
-      userCount: 23,
-      resumeCount: 46,
+      userCount: 0,
+      resumeCount: 0,
       resumeIDArray: [],
       resumeTableOpen: false,
       resumeTable: [],
@@ -502,7 +503,7 @@ async componentDidMount() {
     }
     await Utils.setTronWeb(window.tronWeb, contractAddress);
 
-    //this.onGetUserCount();
+    this.onGetUserCount();
 }
 
 
@@ -585,7 +586,7 @@ async tryGetResume(resumeID,repetitions){
         Swal({
           title: 'Resume Processing Succeeded',
           type: 'success',
-          background: "rgb(198,38,52,.65)",
+          background: "rgb(198,38,52)",
            confirmButtonColor: '#C62634',
 
 
@@ -611,6 +612,9 @@ async tryGetResume(resumeID,repetitions){
       Swal({
           title: 'Resume Processing Failed.  Please Try again.',
           type: 'error',
+          background: "rgb(198,38,52)",
+           confirmButtonColor: '#C62634',
+           backdrop: "rgba(0,0,123,0.4)center left no-repeat",
 
       });
     }
@@ -809,6 +813,7 @@ var index = 0;
 
     this.setState({resumeFiles});
     this.setState({collapseArrays: collapse});
+    this.onGetUserCount();
 
    this.setState({resumesAdded: true});
     
@@ -818,11 +823,11 @@ getColor(number){
  if (number >= 65)
     return '#00ADF3';
   else if( number < 65 && number >= 40)
-    return 'orange';
+    return '#F0C91E';
   else if(number < 40)
-    return 'red';
+    return '#C62634';
     else 
-      return 'blue';
+      return '#1D24AC';
 }
 
  Comparator(a, b) {
@@ -1011,11 +1016,19 @@ async onGetUserCount() {
     const userCount = parseInt(userountHex._hex);
     console.log('Total Users: ', userCount )
     let resumeCountInfo = 0;
+    // if (userCount > 0){
     for (var i =0; i < userCount; i++) {
       let resumeCount = await Utils.contract.getResumeCountByAddress(i).call();
       resumeCountInfo += parseInt(resumeCount._hex);
     }
+
+  // } else{
+  //      let resumeCount = await Utils.contract.getResumeCountByAddress(0).call();
+  //     resumeCountInfo += parseInt(resumeCount._hex);
+  //   }
     console.log('Total Resumes: ', resumeCountInfo)
+
+    this.setState({userCount: userCount, resumeCount: resumeCountInfo});
    }
 
   render() {
@@ -1106,7 +1119,7 @@ async onGetUserCount() {
           <div className="container">
             <span className="number">{this.state.userCount}</span>
             <br />
-            Users
+            {this.state.userCount > 1 ? "Users" : "User"}
           </div>
           <div className="fill speed4" style={{background: "#C62634 "}}></div>
         </div> 
@@ -1115,7 +1128,7 @@ async onGetUserCount() {
         <div className="container">
           <span className="number">{this.state.resumeCount}</span>
           <br />
-          Resumes
+         {this.state.resumeCount > 1 ? "Resumes" : "Resume"}
         </div>
         <div className="fill speed4" style={{background : "#11020A"}}></div>
       </div>
