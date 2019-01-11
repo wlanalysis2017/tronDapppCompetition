@@ -39,8 +39,8 @@ contract Resume {
       return users.length;
   }
 
-  function getResumeCountByAddress(address index) public constant returns(uint) {
-      return resumeMapping[index].length;
+  function getResumeCountByAddress(uint index) public constant returns(uint) {
+      return resumeMapping[users[index]].length;
   }
 
   function getResumeCount() public constant returns(uint) {
