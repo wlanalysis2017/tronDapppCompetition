@@ -153,7 +153,7 @@ resumeTableCellFirst:{
   color: "#FFFFFF",
 },
   resumeTable:{
-    fontSize: "48px",
+    fontSize: "24px",
     color: "#C62634",
   },
   paperStyle: {
@@ -1106,7 +1106,7 @@ async onGetUserCount() {
         >
         <Drawer
           PaperProps={{
-           style: { backgroundColor: 'transparent',boxShadow: 'none',width: "143px", overflow: "none"},
+           style: { backgroundColor: 'transparent',boxShadow: 'none',width: "175px", overflow: "none"},
             }}
         variant="permanent"
        
@@ -1202,7 +1202,7 @@ async onGetUserCount() {
 
                         <RaisedButton
                         disabledBackgroundColor="rgba(0,0,0,0);"
-                        
+                        target="_blank"
                         label="Find Out More Here!"
                         href="https://www.myjobtank.com"
                         rounded="true"
@@ -1215,7 +1215,7 @@ async onGetUserCount() {
                     </Section>
                   </div>
                   <div className="col-md-6" style={{ marginLeft: "25%", marginTop: "25px"}}>
-                     <a style={{marginLeft: "20%", marginTop: "25px"}} 
+                     <a style={{marginLeft: "25%", marginTop: "25px"}} 
                      onClick={(event) => {event.preventDefault()
                         this.onGetResumes() }  } target="_blank"> 
                         <img 
@@ -1282,7 +1282,7 @@ async onGetUserCount() {
               {
                   !this.state.analyzeButtonDisabled &&
               <Section style={{ marginBottom: "5%", marginTop: "2.5%", }} className="insty-submit-button-container">
-                <div className="col-md-1 col-md-offset-5 analyze-button-container">
+                <div  style={{marginLeft: "41.3%"}} className="col-md-1  analyze-button-container">
                  
                   <RaisedButton
                     disabledBackgroundColor="rgba(0,0,0,0);"
