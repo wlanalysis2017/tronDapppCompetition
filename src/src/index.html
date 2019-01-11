@@ -128,6 +128,110 @@
     .whiteLabel{
       color: #FFFFFF;
     }
+    @-moz-keyframes fill {
+  0% {
+    height: 0%;
+  }
+  60% {
+    height: 110%;
+  }
+  70% {
+    height: 95%;
+  }
+  80% {
+    height: 105%;
+  }
+  100% {
+    height: 100%;
+  }
+}
+@-webkit-keyframes fill {
+  0% {
+    height: 0%;
+  }
+  60% {
+    height: 110%;
+  }
+  70% {
+    height: 95%;
+  }
+  80% {
+    height: 105%;
+  }
+  100% {
+    height: 100%;
+  }
+}
+@keyframes fill {
+  0% {
+    height: 0%;
+  }
+  60% {
+    height: 110%;
+  }
+  70% {
+    height: 95%;
+  }
+  80% {
+    height: 105%;
+  }
+  100% {
+    height: 100%;
+  }
+}
+.box {
+  width: 200px;
+  height: 120px;
+  position: relative;
+  display: inline-block;
+}
+.box .container {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+  z-index: 3;
+  text-align: center;
+  color: white;
+  font-size: 14px;
+  padding-top: 15px;
+}
+.box .container .number {
+  font-size: 50px;
+  margin-top: 25px;
+}
+.box .fill {
+  z-index: 2;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+}
+.box .fill.speed1 {
+  -moz-animation: fill 1s ease-out;
+  -webkit-animation: fill 1s ease-out;
+  animation: fill 1s ease-out;
+}
+.box .fill.speed2 {
+  -moz-animation: fill 1.1s ease-out;
+  -webkit-animation: fill 1.1s ease-out;
+  animation: fill 1.1s ease-out;
+}
+.box .fill.speed3 {
+  -moz-animation: fill 1.2s ease-out;
+  -webkit-animation: fill 1.2s ease-out;
+  animation: fill 1.2s ease-out;
+}
+.box .fill.speed4 {
+  -moz-animation: fill 1.3s ease-out;
+  -webkit-animation: fill 1.3s ease-out;
+  animation: fill 1.3s ease-out;
+}
+
   </style>
 
 </head>

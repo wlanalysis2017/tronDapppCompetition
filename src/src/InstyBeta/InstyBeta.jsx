@@ -51,7 +51,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-
+import Drawer from '@material-ui/core/Drawer';
 const FOUNDATION_ADDRESS = 'TWiWt5SEDzaEqS6kE5gandWMNfxR2B5xzg';
 ////////////////////////////////////////////////////////////////////////////////////
 const contractAddress = 'THJKK4NUXqkdriKxef6xkUtp4eyQc258QP';   /// testnet
@@ -251,6 +251,16 @@ resumeTableCellFirst:{
     margin: "2.0em 0 1.5em 0",
     paddingLeftt: "45px"
   },
+  drawer:{
+    width: "350px",
+    backgroundColor: "rgba(0,0,0,0.5)",
+    zIndex: "90000",
+
+  },
+  drawerPaper:{
+    width: "350px",
+    backgroundColor: "rgba(0,0,0,0.5)"
+  }
 };
 function timeConverter(timestamp){
   var a = new Date(timestamp);
@@ -272,6 +282,8 @@ class InstyBeta extends React.Component {
     super(props);
 
     this.state = {
+      userCount: 23,
+      resumeCount: 46,
       resumeIDArray: [],
       resumeTableOpen: false,
       resumeTable: [],
@@ -404,6 +416,7 @@ class InstyBeta extends React.Component {
      this.handleDialogClose = this.handleDialogClose.bind(this);
      this.tryGetResume = this.tryGetResume.bind(this);
      this.removeResumeID = this.removeResumeID.bind(this);
+     this.onGetUserCount = this.onGetUserCount.bind(this);
   }
 
  initCallback (dropzone) {
@@ -411,6 +424,8 @@ class InstyBeta extends React.Component {
 }
 
 async componentDidMount() {
+
+
    console.log("component did mount");
     await new Promise(resolve => {
         const tronWebState = {
@@ -486,6 +501,8 @@ async componentDidMount() {
         });
     }
     await Utils.setTronWeb(window.tronWeb, contractAddress);
+
+    //this.onGetUserCount();
 }
 
 
@@ -570,7 +587,7 @@ async tryGetResume(resumeID,repetitions){
           type: 'success',
           background: "rgb(198,38,52,.65)",
            confirmButtonColor: '#C62634',
-         
+
 
   backdrop: "rgba(0,0,123,0.4)center left no-repeat",
   
@@ -989,6 +1006,17 @@ removeResumeID(){
 
   return;
 }
+async onGetUserCount() {
+    const userountHex = await Utils.contract.getUserCount().call()
+    const userCount = parseInt(userountHex._hex);
+    console.log('Total Users: ', userCount )
+    let resumeCountInfo = 0;
+    for (var i =0; i < userCount; i++) {
+      let resumeCount = await Utils.contract.getResumeCountByAddress(i).call();
+      resumeCountInfo += parseInt(resumeCount._hex);
+    }
+    console.log('Total Resumes: ', resumeCountInfo)
+   }
 
   render() {
     const {formData} = this.state;
@@ -1063,6 +1091,38 @@ removeResumeID(){
         spinner
         text={this.state.loadingMessage}
         >
+        <Drawer
+          PaperProps={{
+           style: { backgroundColor: 'transparent',boxShadow: 'none',width: "143px", overflow: "none"},
+            }}
+        variant="permanent"
+       
+        anchor="left"
+      >
+
+      <div style={{marginTop: "100%"}}>
+
+        <div className="box">
+          <div className="container">
+            <span className="number">{this.state.userCount}</span>
+            <br />
+            Users
+          </div>
+          <div className="fill speed4" style={{background: "#C62634 "}}></div>
+        </div> 
+  
+      <div className="box" style={{marginTop: "-5px"}}>
+        <div className="container">
+          <span className="number">{this.state.resumeCount}</span>
+          <br />
+          Resumes
+        </div>
+        <div className="fill speed4" style={{background : "#11020A"}}></div>
+      </div>
+   
+ 
+    </div>
+      </Drawer>
         <ValidatorForm
                 ref="form"
                 onSubmit={this.handleSubmit}
