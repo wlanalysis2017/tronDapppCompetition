@@ -170,11 +170,11 @@ resumeTableCellFirst:{
   roundedButton: {
      margin: "0 auto",
      color: "white",
-   
+    width: "120px",
     position: "relative",
     height: "100%",
     bordeRadius: "25px ",
-    padding: "10px 50px",
+    padding: "15px auto",
     boxShadow: "0px",
     backgroundColor: "#C62634",
   },
@@ -1206,7 +1206,7 @@ async onGetUserCount() {
                         label="Find Out More Here!"
                         href="https://www.myjobtank.com"
                         rounded="true"
-                        buttonStyle={{margin: "0 auto", color: "white", position: "relative",height: "100%",bordeRadius: "25px ", padding: "10px 30px", boxShadow: "0px",backgroundColor: "#C62634",}}
+                        buttonStyle={{margin: "0 auto", color: "white", position: "relative",height: "100%",bordeRadius: "25px ", padding: "8px 35px", boxShadow: "0px",backgroundColor: "#C62634",}}
                         labelColor="#fff"
                         style={{marginLeft:"32.5%", marginTop: "25px",marginBottom: "25px",color: "white",backgroundColor: "#C62634",borderRadius: "25px",}}
                         overlayStyle={styles.roundedButtonOverlay}
@@ -1282,7 +1282,7 @@ async onGetUserCount() {
               {
                   !this.state.analyzeButtonDisabled &&
               <Section style={{ marginBottom: "5%", marginTop: "2.5%", }} className="insty-submit-button-container">
-                <div  style={{marginLeft: "41.3%"}} className="col-md-1  analyze-button-container">
+                <div  style={{marginLeft: "43.5%"}} className="col-md-1  analyze-button-container">
                  
                   <RaisedButton
                     disabledBackgroundColor="rgba(0,0,0,0);"
