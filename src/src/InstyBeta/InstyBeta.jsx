@@ -821,7 +821,7 @@ var index = 0;
 
 getColor(number){
  if (number >= 65)
-    return '#00ADF3';
+    return '#1D24AC';
   else if( number < 65 && number >= 40)
     return '#F0C91E';
   else if(number < 40)
